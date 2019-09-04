@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: shi_font
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 1024
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 2
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: bd55b2e0100a1564292830e1870b788d, type: 3}
+    - {fileID: 2800000, guid: 4309bf93def9c5e4bb8f57f752d6a101, type: 3}
+    - {fileID: 2800000, guid: b36559ca27f08e941a4f6bea577aa4e9, type: 3}
+    - {fileID: 2800000, guid: e2bb2a9b9d5522840a504c8bdc3ce370, type: 3}
+    - {fileID: 2800000, guid: 4bd2f00323e37fc42a1e60d0cf562269, type: 3}
+    - {fileID: 2800000, guid: b91740eb8f6d5c94faffb14dcf89796b, type: 3}
+    - {fileID: 2800000, guid: e6820445df0bc0d489073f969c38d48d, type: 3}
+    - {fileID: 2800000, guid: efca78ef06603ea43ac8873751ab59a7, type: 3}
+    - {fileID: 2800000, guid: fb7c99482d70f7144bd9b59ce6d9e2d5, type: 3}
+    - {fileID: 2800000, guid: 81ff2d9bd0c5eff45901daf9d7b7cfab, type: 3}
+    - {fileID: 2800000, guid: 5628f21f5d070304a8f4b20630b06fae, type: 3}
+    - {fileID: 2800000, guid: 3e370a0070ba1074aa9e7615c21a0795, type: 3}
+    - {fileID: 2800000, guid: 6410e0265bdf3ad43a845df3bfb220b1, type: 3}
+    - {fileID: 2800000, guid: 4b0713d8bf158e446899b7cc7375cf32, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3e370a0070ba1074aa9e7615c21a0795, type: 3}
+  - {fileID: 21300000, guid: bd55b2e0100a1564292830e1870b788d, type: 3}
+  - {fileID: 21300000, guid: 4bd2f00323e37fc42a1e60d0cf562269, type: 3}
+  - {fileID: 21300000, guid: 4309bf93def9c5e4bb8f57f752d6a101, type: 3}
+  - {fileID: 21300000, guid: e6820445df0bc0d489073f969c38d48d, type: 3}
+  - {fileID: 21300000, guid: 6410e0265bdf3ad43a845df3bfb220b1, type: 3}
+  - {fileID: 21300000, guid: fb7c99482d70f7144bd9b59ce6d9e2d5, type: 3}
+  - {fileID: 21300000, guid: 4b0713d8bf158e446899b7cc7375cf32, type: 3}
+  - {fileID: 21300000, guid: b36559ca27f08e941a4f6bea577aa4e9, type: 3}
+  - {fileID: 21300000, guid: e2bb2a9b9d5522840a504c8bdc3ce370, type: 3}
+  - {fileID: 21300000, guid: 81ff2d9bd0c5eff45901daf9d7b7cfab, type: 3}
+  - {fileID: 21300000, guid: b91740eb8f6d5c94faffb14dcf89796b, type: 3}
+  - {fileID: 21300000, guid: 5628f21f5d070304a8f4b20630b06fae, type: 3}
+  - {fileID: 21300000, guid: efca78ef06603ea43ac8873751ab59a7, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - xun
+  - bi
+  - hong
+  - bu
+  - nian
+  - ye
+  - qiu
+  - zui
+  - feng
+  - gu
+  - xia
+  - jian
+  - xue
+  - qian
+  m_Tag: shi_font
+  m_IsVariant: 0
