@@ -16,14 +16,6 @@ public class SceneSwitchManager : Singleton<SceneSwitchManager>
         GoToMainScene();
     }
 
-    private void Update()
-    {
-        if (NRInput.GetButtonDown(ControllerButton.HOME))
-        {
-            GoToMainScene();
-        }
-    }
-
     #region button event
     void InitIcons()
     {

@@ -61,7 +61,8 @@ public class MoveablePhysicsObject : MonoBehaviour
         {
             if (controlTransform == null)
             {
-                controlTransform = NRInput.AnchorsHelper.GetAnchor(ControllerAnchorEnum.RightLaserAnchor);
+                if (dragRaycaster)
+                    controlTransform = dragRaycaster.transform;
             }
             return controlTransform;
         }
@@ -115,11 +116,11 @@ public class MoveablePhysicsObject : MonoBehaviour
     void Awake()
     {
         interactiveItem = gameObject.GetComponent<ARInteractiveItem>();
-        if (interactiveItem == null)
+        if (!interactiveItem)
             interactiveItem = gameObject.AddComponent<ARInteractiveItem>();
         interactiveItem.OnSelected += OnSelect;
         interactiveItem.OnDeselected += OnDeselect;
-        camRoot = Camera.main.transform.parent;
+        camRoot = NRInput.CameraCenter;
 
         minScale = transform.localScale * scaleOfOriginMin;
         maxScale = transform.localScale * scaleOfOriginMax;
@@ -132,6 +133,10 @@ public class MoveablePhysicsObject : MonoBehaviour
         if (interactiveItem.IsBeingSelected)
         {
             OnDrag();
+        }
+        else
+        {
+            dragRaycaster = null;
         }
     }
 
@@ -149,8 +154,13 @@ public class MoveablePhysicsObject : MonoBehaviour
         interactiveItem.OnDeselected -= OnDeselect;
     }
 
+    private NRPointerRaycaster dragRaycaster;
+    private FlexLaserVisual flexLaserVisual;
+
     protected void OnDrag()
     {
+        if (dragRaycaster == null)
+            return;
         UpdateControlTransform();
         if (faceCameraOnDrag)
         {
@@ -170,6 +180,11 @@ public class MoveablePhysicsObject : MonoBehaviour
 
     protected void OnSelect()
     {
+        dragRaycaster = interactiveItem.SelectingRaycaster;
+        if(dragRaycaster)
+            flexLaserVisual = dragRaycaster.gameObject.GetComponentInChildren<FlexLaserVisual>(true);
+        if (flexLaserVisual)
+            flexLaserVisual.SelectedObject = transform;
         originPos = transform.position;
         originRot = transform.rotation;
         originScale = transform.localScale;
@@ -216,6 +231,11 @@ public class MoveablePhysicsObject : MonoBehaviour
 
     protected void OnDeselect()
     {
+        Debug.Log("OnDeselect");
+
+        if (flexLaserVisual)
+            flexLaserVisual.SelectedObject = null;
+        flexLaserVisual = null;
         ResetRigidbody();
         lastStateChangeFrame = Time.frameCount;
     }
@@ -242,9 +262,8 @@ public class MoveablePhysicsObject : MonoBehaviour
     //使用touchpad输入
     private void UpdateTouchPad()
     {
-        var touchpos = NRInput.GetTouch();
-        float xAxis = touchpos.x;
-        float yAxis = touchpos.y;
+        float xAxis = NRInput.GetTouch().x;
+        float yAxis = NRInput.GetTouch().y;
         if (xAxis != 0f || yAxis != 0f)
         {
             deltaTouch = (lastTouchPos == Vector2.zero) ? Vector2.zero : new Vector2(xAxis - lastTouchPos.x, yAxis - lastTouchPos.y);
@@ -281,36 +300,35 @@ public class MoveablePhysicsObject : MonoBehaviour
         }
     }
 
-    //使用Joystick输入
-    private void UpdateJoystickAxis()
-    {
-        var touchpos = NRInput.GetTouch();
-        float xAxis = touchpos.x;
-        float yAxis = touchpos.y;
-        if (Mathf.Abs(yAxis) > 0.1f)
-        {
-            targetControlZDistance += yAxis * distanceIncrementOnSwipe * Time.deltaTime;
-            targetControlZDistance = Mathf.Clamp(targetControlZDistance,
-                                                 distanceFromControllerMin,
-                                                 distanceFromControllerMax);
-            controlZDistance = targetControlZDistance;
-        }
-        if (Mathf.Abs(xAxis) > 0.8f)
-        {
-            if (enableScale)
-            {
-                if (xAxis < 0)
-                    transform.localScale = Vector3.Lerp(transform.localScale, minScale, 1f * Time.deltaTime);
-                else
-                    transform.localScale = Vector3.Lerp(transform.localScale, maxScale, 0.1f * Time.deltaTime);
-            }
-            else if (enableRotate)
-            {
-                touchPosXRemap = -Mathf.Sign(xAxis) * 0.01f * (objectInverted ? -1f : 1f);
-                verifyRotation = verifyRotation * Quaternion.AngleAxis(touchPosXRemap * Mathf.Rad2Deg, Vector3.up);
-            }
-        }
-    }
+    ////使用Joystick输入
+    //private void UpdateJoystickAxis()
+    //{
+    //    float xAxis = Controller.GetAxis_X();
+    //    float yAxis = Controller.GetAxis_Y();
+    //    if (Mathf.Abs(yAxis) > 0.1f)
+    //    {
+    //        targetControlZDistance += yAxis * distanceIncrementOnSwipe * Time.deltaTime;
+    //        targetControlZDistance = Mathf.Clamp(targetControlZDistance,
+    //                                             distanceFromControllerMin,
+    //                                             distanceFromControllerMax);
+    //        controlZDistance = targetControlZDistance;
+    //    }
+    //    if (Mathf.Abs(xAxis) > 0.8f)
+    //    {
+    //        if (enableScale)
+    //        {
+    //            if (xAxis < 0)
+    //                transform.localScale = Vector3.Lerp(transform.localScale, minScale, 1f * Time.deltaTime);
+    //            else
+    //                transform.localScale = Vector3.Lerp(transform.localScale, maxScale, 0.1f * Time.deltaTime);
+    //        }
+    //        else if (enableRotate)
+    //        {
+    //            touchPosXRemap = - Mathf.Sign(xAxis) * 0.01f * (objectInverted ? -1f : 1f);
+    //            verifyRotation = verifyRotation * Quaternion.AngleAxis(touchPosXRemap * Mathf.Rad2Deg, Vector3.up);
+    //        }
+    //    }
+    //}
 
     private void UpdateControlTransform()
     {

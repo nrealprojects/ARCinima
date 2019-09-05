@@ -131,6 +131,8 @@ public class MultiScreenPlayerManager : NREAL.AR.Singleton<MultiScreenPlayerMana
         return m_ScreenPlayer.transform.localScale;
     }
 
+    public SceneBase ARCinimaScene;
+
     void Start()
     {
         StartCoroutine(Init());
@@ -138,7 +140,7 @@ public class MultiScreenPlayerManager : NREAL.AR.Singleton<MultiScreenPlayerMana
 
     private void Update()
     {
-        if (NRInput.GetButtonDown(ControllerButton.HOME))
+        if (NRInput.GetButtonDown(ControllerButton.HOME) && ARCinimaScene.isActive)
         {
             OnCancel();
         }
@@ -227,6 +229,10 @@ public class MultiScreenPlayerManager : NREAL.AR.Singleton<MultiScreenPlayerMana
             m_WitMenuHelper.HideMenu();
         if (m_CurrentScreen)
             DeselectScreen();
+        else
+        {
+            SceneSwitchManager.Instance.GoToMainScene();
+        }
         if (m_CurrentListInfo != null)
             HideScreenList();
     }
