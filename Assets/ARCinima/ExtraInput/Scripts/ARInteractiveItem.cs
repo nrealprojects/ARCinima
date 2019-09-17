@@ -28,6 +28,11 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
         m_MoveableItem = GetComponent<MoveablePhysicsObject>();
     }
 
+    private void OnDisable()
+    {
+        Deselected();
+    }
+
     public void Hover()
     {
         IsHovering = true;
@@ -81,26 +86,23 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
     {
         SelectingRaycaster = raycaster;
         if (OnSelected != null)
-        {
             OnSelected();
-        }
         NRInputModule.Instance.enabled = false;
         NRInput.ReticleVisualActive = false;
+        forceDeselectOnce = false;
     }
 
     public void Deselected()
     {
-        if(SelectingRaycaster != null)
+        if(IsBeingSelected)
         {
             if (OnDeselected != null)
-            {
                 OnDeselected();
-            }
+            m_DeselectFrame = Time.frameCount;
+            SelectingRaycaster = null;
+            NRInputModule.Instance.enabled = true;
+            NRInput.ReticleVisualActive = true;
         }
-        m_DeselectFrame = Time.frameCount;
-        SelectingRaycaster = null;
-        NRInputModule.Instance.enabled = true;
-        NRInput.ReticleVisualActive = true;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -136,6 +138,12 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     private float m_TriggerDownTime;
     private int m_DeselectFrame;
+    private Vector2 m_TouchDownPos;
+    private bool m_TouchMoved = false;
+    private float m_ClickInterval;
+
+    private const float JUDGE_TOUCH_MOVED_DISTANCE = 0.1f;
+
     private void JudgeDrop()
     {
         if (!IsMoveable)
@@ -143,18 +151,25 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
         if (!IsBeingSelected)
             return;
         if (NRInput.GetButtonDown(ControllerButton.TRIGGER))
+        {
             m_TriggerDownTime = Time.time;
+            m_TouchDownPos = NRInput.GetTouch();
+        }
+        if (NRInput.GetButton(ControllerButton.TRIGGER) && !m_TouchMoved)
+            m_TouchMoved = Vector2.Distance(NRInput.GetTouch(), m_TouchDownPos) > JUDGE_TOUCH_MOVED_DISTANCE;
         if (NRInput.GetButtonUp(ControllerButton.TRIGGER))
         {
             if ((Time.time - m_TriggerDownTime) < SelectingRaycaster.clickInterval)
                 forceDeselectOnce = true;
+            if (NRInput.GetControllerType() == ControllerType.CONTROLLER_TYPE_PHONE && m_TouchMoved)
+                forceDeselectOnce = false;
+            m_TouchMoved = false;
         }
         else if (NRInput.GetButtonUp(ControllerButton.HOME))
         {
             forceDeselectOnce = true;
         }
-
-        if (forceDeselectOnce == true)
+        if (forceDeselectOnce)
         {
             forceDeselectOnce = false;
             Deselected();

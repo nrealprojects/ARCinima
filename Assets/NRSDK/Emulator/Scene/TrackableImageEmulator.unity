@@ -126,27 +126,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.02292502
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.5705599
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.44552553
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.8952692
       objectReference: {fileID: 0}
     - target: {fileID: 4870001952238468, guid: 4cc4ed5324930cd4ca030d3d2b956ea7, type: 2}
       propertyPath: m_RootOrder
@@ -583,7 +583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1555680266}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: CubeCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,13 +595,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1555680265}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.080000006, y: 0.080000006, z: 0.080000006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2027414582}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1971808284
 Prefab:
@@ -616,19 +616,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.423
+      value: -0.278
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 1.908
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0.9480851
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalRotation.z
@@ -636,11 +636,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.31801683
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -142.914
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d95c73ea5c81ab1448cf27ee783fbb93, type: 3}
@@ -670,8 +674,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2027414581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: -0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1555680266}
   m_RootOrder: 0

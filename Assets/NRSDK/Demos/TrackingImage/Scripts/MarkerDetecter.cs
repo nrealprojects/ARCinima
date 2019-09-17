@@ -5,15 +5,11 @@ namespace NRKernal.NRExamples
 {
     public class MarkerDetecter : MonoBehaviour
     {
-        /// <summary>
-        /// A prefab for tracking and visualizing detected markers.
-        /// </summary>
+        // A prefab for tracking and visualizing detected markers.
         public GameObject DetectedMarkerPrefab;
 
-        /// <summary>
-        /// A list to hold new planes NRSDK began tracking in the current frame. This object is used across
-        /// the application to avoid per-frame allocations.
-        /// </summary>
+        // A list to hold new planes NRSDK began tracking in the current frame. This object is used across
+        // the application to avoid per-frame allocations.
         private List<NRTrackableImage> m_NewMarkers = new List<NRTrackableImage>();
 
         public void Update()

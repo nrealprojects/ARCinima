@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -158,7 +156,7 @@ namespace NRKernal
         void CreateRenderTextures()
         {
             var resolution = NRDevice.Instance.NativeHMD.GetEyeResolution();
-            NRDebug.Log("[CreateRenderTextures]  resolution :" + resolution.ToString());
+            NRDebugger.Log("[CreateRenderTextures]  resolution :" + resolution.ToString());
 
             for (int i = 0; i < EyeTextureCount; i++)
             {

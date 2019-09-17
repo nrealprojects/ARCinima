@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/                 
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -27,28 +25,40 @@ namespace NRKernal
         void Awake()
         {
 #if !UNITY_EDITOR
-            NRDebug.EnableLog = Debug.isDebugBuild;
+            NRDebugger.EnableLog = Debug.isDebugBuild;
 #endif
-            NRDebug.Log("[SessionBehaviour Awake: CreateSession]");
+            NRDebugger.Log("[SessionBehaviour Awake: CreateSession]");
             NRSessionManager.Instance.CreateSession(this);
         }
 
         void Start()
         {
-            NRDebug.Log("[SessionBehaviour DelayStart: StartSession]");
+            NRDebugger.Log("[SessionBehaviour DelayStart: StartSession]");
             NRSessionManager.Instance.StartSession();
             NRSessionManager.Instance.SetConfiguration(SessionConfig);
         }
 
+        private void OnApplicationPause(bool pause)
+        {
+            if (pause)
+            {
+                NRSessionManager.Instance.DisableSession();
+            }
+            else
+            {
+                NRSessionManager.Instance.ResumeSession();
+            }
+        }
+
         void OnDisable()
         {
-            NRDebug.Log("[SessionBehaviour OnDisable: DisableSession]");
+            NRDebugger.Log("[SessionBehaviour OnDisable: DisableSession]");
             NRSessionManager.Instance.DisableSession();
         }
 
         void OnDestroy()
         {
-            NRDebug.Log("[SessionBehaviour OnDestroy DestroySession]");
+            NRDebugger.Log("[SessionBehaviour OnDestroy DestroySession]");
             NRSessionManager.Instance.DestroySession();
         }
     }

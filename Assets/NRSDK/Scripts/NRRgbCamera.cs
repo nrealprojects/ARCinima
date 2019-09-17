@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/                 
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -53,7 +51,7 @@ namespace NRKernal
                 return;
             }
 
-            NRDebug.Log("[NRRgbCamera] Initialize");
+            NRDebugger.Log("[NRRgbCamera] Initialize");
             m_NativeCamera = new NativeCamera();
 #if !UNITY_EDITOR
             m_NativeCamera.Create();
@@ -72,7 +70,7 @@ namespace NRKernal
             m_NativeCamera.SetImageFormat(format);
 #endif
             ImageFormat = format;
-            NRDebug.Log("[NRRgbCamera] SetImageFormat : " + format.ToString());
+            NRDebugger.Log("[NRRgbCamera] SetImageFormat : " + format.ToString());
         }
 
         private static void Capture(UInt64 rgb_camera_handle, UInt64 rgb_camera_image_handle)
@@ -114,7 +112,7 @@ namespace NRKernal
                 StateError(string.Format("Can not start in state:{0}", CurrentState));
                 return;
             }
-            NRDebug.Log("[NRRgbCamera] Start to play");
+            NRDebugger.Log("[NRRgbCamera] Start to play");
 #if !UNITY_EDITOR
             m_NativeCamera.StartCapture();
 #endif
@@ -131,7 +129,7 @@ namespace NRKernal
                 StateError(string.Format("Can not stop in state:{0}", CurrentState));
                 return;
             }
-            NRDebug.Log("[NRRgbCamera] Start to Stop");
+            NRDebugger.Log("[NRRgbCamera] Start to Stop");
 #if !UNITY_EDITOR
             m_NativeCamera.StopCapture();
 #endif
@@ -145,7 +143,7 @@ namespace NRKernal
         {
             if (m_NativeCamera != null)
             {
-                NRDebug.Log("[NRRgbCamera] Start to Release");
+                NRDebugger.Log("[NRRgbCamera] Start to Release");
 #if !UNITY_EDITOR
                 m_NativeCamera.Release();
 #endif

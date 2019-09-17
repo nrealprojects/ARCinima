@@ -76,7 +76,7 @@ namespace NREAL.AR.VideoPlayer
             }
             else
             {
-                NRDebug.LogError(www.error);
+                NRDebugger.LogError(www.error);
             }
         }
 
@@ -89,7 +89,7 @@ namespace NREAL.AR.VideoPlayer
                 item.SetData(videoConfig.videos[i]);
                 item.itemClick += OnVideoItemClick;
             }
-            
+
         }
 
         public CompareFunction CompareOP = CompareFunction.Always;
@@ -100,7 +100,7 @@ namespace NREAL.AR.VideoPlayer
         {
             var m = m_VideoItemList[0].GetComponentInChildren<Graphic>().material;
 
-            if ((int)m.GetFloat("_StencilComp") != (int)CompareOP )
+            if ((int)m.GetFloat("_StencilComp") != (int)CompareOP)
             {
                 m.SetFloat("_StencilComp", (float)CompareOP);
             }
@@ -115,7 +115,7 @@ namespace NREAL.AR.VideoPlayer
                 m.SetFloat("_StencilOp", (float)StencilOp);
             }
 
-            
+
         }
     }
 }

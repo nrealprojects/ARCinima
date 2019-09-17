@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -131,19 +129,19 @@ namespace NRToolkit.Sharing
         private void OnNetClosed()
         {
             NetState = ConnectState.DisConnected;
-            NRDebug.Log("OnNetClosed");
+            NRDebugger.Log("OnNetClosed");
         }
 
         private void OnNetConnectError()
         {
             NetState = ConnectState.Error;
-            NRDebug.LogError("OnNetConnectError");
+            NRDebugger.LogError("OnNetConnectError");
         }
 
         private void OnNetConnected()
         {
             NetState = ConnectState.Connected;
-            NRDebug.Log("OnNetConnected");
+            NRDebugger.Log("OnNetConnected");
 
             if (Player != null)
             {

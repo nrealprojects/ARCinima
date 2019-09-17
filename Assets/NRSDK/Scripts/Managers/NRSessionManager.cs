@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -94,7 +92,7 @@ namespace NRKernal
         {
             if (SessionBehaviour != null)
             {
-                NRDebug.LogError("Multiple SessionBehaviour components cannot exist in the scene. " +
+                NRDebugger.LogError("Multiple SessionBehaviour components cannot exist in the scene. " +
                   "Destroying the newest.");
                 GameObject.Destroy(session);
                 return;
@@ -119,14 +117,14 @@ namespace NRKernal
             var database = SessionBehaviour.SessionConfig.TrackingImageDatabase;
             if (database == null)
             {
-                NRDebug.Log("augmented image data base is null!");
+                NRDebugger.Log("augmented image data base is null!");
                 return;
             }
             string deploy_path = database.TrackingImageDataOutPutPath;
-            NRDebug.Log("[TrackingImageDatabase] DeployData to path :" + deploy_path);
+            NRDebugger.Log("[TrackingImageDatabase] DeployData to path :" + deploy_path);
             if (Directory.Exists(database.TrackingImageDataPath))
             {
-                NRDebug.Log("augmented image data is exit!");
+                NRDebugger.Log("augmented image data is exit!");
                 return;
             }
             ZipUtility.UnzipFile(database.RawData, deploy_path, NativeConstants.ZipKey);
@@ -241,11 +239,16 @@ namespace NRKernal
 
         private void CreateEmulator()
         {
-            if (!GameObject.Find("NREmulatorManager"))
+            if (!NREmulatorManager.Inited && !GameObject.Find("NREmulatorManager"))
+            {
+                NREmulatorManager.Inited = true;
                 GameObject.Instantiate(Resources.Load("Prefabs/NREmulatorManager"));
-
+            }
             if (!GameObject.Find("NREmulatorHeadPos"))
+            {
                 GameObject.Instantiate(Resources.Load("Prefabs/NREmulatorHeadPose"));
+
+            }
         }
     }
 }

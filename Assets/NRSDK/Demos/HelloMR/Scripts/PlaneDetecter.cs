@@ -5,15 +5,10 @@ namespace NRKernal.NRExamples
 {
     public class PlaneDetecter : MonoBehaviour
     {
-        /// <summary>
-        /// A prefab for tracking and visualizing detected planes.
-        /// </summary>
         public GameObject DetectedPlanePrefab;
 
-        /// <summary>
-        /// A list to hold new planes NRSDK began tracking in the current frame. This object is used across
-        /// the application to avoid per-frame allocations.
-        /// </summary>
+        // A list to hold new planes NRSDK began tracking in the current frame. This object is used across
+        // the application to avoid per-frame allocations.
         private List<NRTrackablePlane> m_NewPlanes = new List<NRTrackablePlane>();
 
         public void Update()

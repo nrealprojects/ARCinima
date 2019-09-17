@@ -28,19 +28,17 @@ public class ScreensContainer : MonoBehaviour
     public bool IsRotating { get; private set; }
     public float DistanceFromCamera { get; private set; }
 
-    private NRPointerRaycaster m_NRPointerRaycaster = null;
-    public NRPointerRaycaster Raycaster
-    {
-        get
-        {
-            if (m_NRPointerRaycaster == null)
-            {
-                m_NRPointerRaycaster = GameObject.FindObjectOfType<NRKernal.NRPointerRaycaster>();
-            }
-
-            return m_NRPointerRaycaster;
-        }
-    }
+    //public ARRayCasterController Controller
+    //{
+    //    get
+    //    {
+    //        if (ARControllerManager.Instance)
+    //        {
+    //            return ARControllerManager.Instance.Controller;
+    //        }
+    //        return null;
+    //    }
+    //}
 
     public void Init(Transform arCam)
     {
@@ -62,15 +60,38 @@ public class ScreensContainer : MonoBehaviour
     {
         if (inited)
             DistanceFromCamera = (arCam.position - transform.position).magnitude;
-        if (inited && !isLocked && Raycaster)
+        if (inited && !isLocked)
         {
-            if (!Raycaster.FirstRaycastResult().isValid)
-                return;
+            //if (ARControllerManager.Instance.CurrentSelectedTransform)
+            //    return;
+
             UpdateTouchPad();
         }
     }
 
     private float rotateSpeed = 100f;
+    private void UpdateJoystick()
+    {
+        var touch = NRInput.GetTouch(ControllerHandEnum.Right);
+        xAxis = touch.x;
+        yAxis = touch.y;
+        currentSpeed.x = Mathf.SmoothDamp(currentSpeed.x, xAxis, ref velocity.x, smoothingTime);
+        currentSpeed.y = Mathf.SmoothDamp(currentSpeed.y, yAxis, ref velocity.y, smoothingTime);
+
+        //currentSpeed.x = Mathf.Lerp(currentSpeed.x, mXAxis, Time.deltaTime * 4f);
+        //currentSpeed.y = Mathf.Lerp(currentSpeed.y, mYAxis, Time.deltaTime * 4f);
+        IsRotating = false;
+        if (Mathf.Abs(currentSpeed.x) > 0.4f)
+        {
+            IsRotating = true;
+            transform.Rotate(arCam.up, currentSpeed.x * rotateSpeed * Time.deltaTime, Space.World);
+        }
+        else if (Mathf.Abs(currentSpeed.y) > 0.4f)
+        {
+            IsRotating = true;
+            transform.Rotate(arCam.right, currentSpeed.y * rotateSpeed * Time.deltaTime, Space.World);
+        }
+    }
 
     private float accelerValue = 6f;  //减速时的阻尼加速度
     private Vector2 lastTouchPos;
@@ -87,9 +108,9 @@ public class ScreensContainer : MonoBehaviour
     //使用touchpad输入
     private void UpdateTouchPad()
     {
-        var touchpos = NRInput.GetTouch(ControllerHandEnum.Right);
-        xAxis = touchpos.x;
-        yAxis = touchpos.y;
+        var touch = NRInput.GetTouch(ControllerHandEnum.Right);
+        xAxis = touch.x;
+        yAxis = touch.y;
         if (xAxis != 0f || yAxis != 0f)
         {
             if (lastTouchPos == Vector2.zero)

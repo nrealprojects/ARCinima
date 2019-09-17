@@ -106,7 +106,7 @@ Material:
     - _Metallic: 0.646
     - _Mode: 0
     - _Normalintensity: 0.963
-    - _OcclusionStrength: 1
+    - _OcclusionStrength: 0.969
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 0

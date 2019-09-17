@@ -1,12 +1,10 @@
 ﻿/****************************************************************************
-* Copyright 2019 Nreal Techonology Limited. All rights reserved.
-*                                                                                                                                                          
-* This file is part of NRSDK.                                                                                                          
-*                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
+* Copyright 2019 Nreal Techonology Limited.All rights reserved.
+*
+* This file is part of NRSDK.
+*
 * https://www.nreal.ai/        
-* 
+*
 *****************************************************************************/
 
 namespace NRKernal

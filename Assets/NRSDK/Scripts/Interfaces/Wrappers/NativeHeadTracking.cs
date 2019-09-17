@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/               
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -31,7 +29,7 @@ namespace NRKernal
         public bool Create()
         {
             var result = NativeApi.NRHeadTrackingCreate(m_NativeInterface.TrackingHandle, ref headTrackingHandle);
-            NRDebug.Log("[NativeHeadTracking Create :]" + result.ToString());
+            NRDebugger.Log("[NativeHeadTracking Create :]" + result.ToString());
             return result == NativeResult.Success;
         }
 
@@ -45,7 +43,7 @@ namespace NRKernal
             NativeApi.NRHeadTrackingGetRecommendPredictTime(m_NativeInterface.TrackingHandle, headTrackingHandle, ref predict_time);
             hmd_nanos += predict_time;
             result = NativeApi.NRHeadTrackingAcquireTrackingPose(m_NativeInterface.TrackingHandle, headTrackingHandle, hmd_nanos, ref headPoseHandle);
-            //NRDebug.Log("[NativeHeadTracking Create :]" + m_NativeInterface.TrackingHandle + " head tracking handle:" + headTrackingHandle.ToString());
+            //NRDebuger.Log("[NativeHeadTracking Create :]" + m_NativeInterface.TrackingHandle + " head tracking handle:" + headTrackingHandle.ToString());
             NativeMat4f headpos_native = new NativeMat4f(Matrix4x4.identity);
             result = NativeApi.NRTrackingPoseGetPose(m_NativeInterface.TrackingHandle, headPoseHandle, ref headpos_native);
             Pose head_pose = Pose.identity;

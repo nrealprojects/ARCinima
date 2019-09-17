@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary>
-    /// Visualizes a single DetectedPlane in the Unity scene.
-    /// </summary>
+    /**
+    * @brief  Visualizes a single DetectedPlane in the Unity scene.
+    */
     public class DetectedPlaneVisualizer : MonoBehaviour
     {
         private static int s_PlaneCount = 0;
@@ -44,18 +44,12 @@
 
         private MeshRenderer m_MeshRenderer;
 
-        /// <summary>
-        /// The Unity Awake() method.
-        /// </summary>
         public void Awake()
         {
             m_Mesh = GetComponent<MeshFilter>().mesh;
             m_MeshRenderer = GetComponent<UnityEngine.MeshRenderer>();
         }
 
-        /// <summary>
-        /// The Unity Update() method.
-        /// </summary>
         public void Update()
         {
             if (m_DetectedPlane == null)

@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/               
 * 
 *****************************************************************************/
@@ -14,7 +12,6 @@ namespace NRKernal
     using UnityEngine;
     public class NREmulatorHeadPose : MonoBehaviour
     {
-        // 模拟Camera位置
         private GameObject m_CameraTarget;
 
         public float HeadMoveSpeed = 1.0f; //regular speed
@@ -61,7 +58,6 @@ namespace NRKernal
             Vector3 pos = p + m_CameraTarget.transform.position;
             m_CameraTarget.transform.position = pos;
 
-            // 调用api，传入模拟的位置移动数值
             NREmulatorManager.Instance.NativeEmulatorApi.SetHeadTrackingPose(pos, q);
         }
 

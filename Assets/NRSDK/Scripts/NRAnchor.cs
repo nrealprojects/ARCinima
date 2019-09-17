@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -59,7 +57,7 @@ namespace NRKernal
         {
             if (Trackable == null)
             {
-                NRDebug.LogError("NRAnchor components instantiated outside of NRInternel are not supported. " +
+                NRDebugger.LogError("NRAnchor components instantiated outside of NRInternel are not supported. " +
                     "Please use a 'Create' method within NRInternel to instantiate anchors.");
                 return;
             }

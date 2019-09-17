@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/           
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -17,7 +15,7 @@ namespace NRKernal
     /**
      * @brief A tool for log.
      */
-    public class NRDebug
+    public class NRDebugger
     {
 #if UNITY_EDITOR
         public static bool EnableLog = false;

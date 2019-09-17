@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -24,7 +22,7 @@ namespace NRKernal
 
         public bool Init()
         {
-            NRDebug.Log("NativeController start init:");
+            NRDebugger.Log("NativeController start init:");
             NativeResult result = NativeApi.NRControllerCreate(ref m_ControllerHandle);
             if (result == NativeResult.Success)
             {
@@ -32,7 +30,7 @@ namespace NRKernal
                 NativeApi.NRControllerStart(m_ControllerHandle);
 
                 int count = GetControllerCount();
-                NRDebug.Log("__controller count:" + count);
+                NRDebugger.Log("__controller count:" + count);
                 for (int i = 0; i < count; i++)
                 {
                     result = NativeApi.NRControllerStateCreate(m_ControllerHandle, i, ref m_StateHandles[i]);
@@ -42,10 +40,10 @@ namespace NRKernal
                         return false;
                     }
                 }
-                NRDebug.Log("Native Controller Created Sucessed");
+                NRDebugger.Log("Native Controller Created Sucessed");
                 return true;
             }
-            NRDebug.Log("Native Controller Create Failed!");
+            NRDebugger.Log("Native Controller Create Failed!");
             return false;
         }
 

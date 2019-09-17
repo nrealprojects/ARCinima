@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/              
+* https://www.nreal.ai/                  
 * 
 *****************************************************************************/
 

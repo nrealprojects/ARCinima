@@ -2,14 +2,14 @@
 
 namespace NRKernal.NRExamples
 {
-    /// <summary>
-    /// Controls the HelloAR example.
-    /// </summary>
+    /**
+    * @brief  Controls the HelloAR example.
+    */
     public class HelloMRController : MonoBehaviour
     {
-        /// <summary>
-        /// A model to place when a raycast from a user touch hits a plane.
-        /// </summary>
+        /**
+        * @brief  A model to place when a raycast from a user touch hits a plane.
+        */
         public GameObject AndyPlanePrefab;
 
         void Update()

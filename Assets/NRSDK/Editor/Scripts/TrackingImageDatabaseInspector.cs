@@ -1,22 +1,11 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="TrackingImageDatabaseInspector.cs" company="Google">
-//
-// Copyright 2018 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/****************************************************************************
+* Copyright 2019 Nreal Techonology Limited. All rights reserved.
+*                                                                                                                                                          
+* This file is part of NRSDK.                                                                                                          
+*                                                                                                                                                           
+* https://www.nreal.ai/        
+* 
+*****************************************************************************/
 
 namespace NRKernal
 {
@@ -38,8 +27,10 @@ namespace NRKernal
         private static BackgroundJobExecutor m_QualityBackgroundExecutor = new BackgroundJobExecutor();
         private static NRTrackingImageDatabase m_DatabaseForQualityJobs = null;
         private static Dictionary<string, JsonData> m_UpdatedQualityScores = new Dictionary<string, JsonData>();
+        private static Dictionary<string, float> m_TempWidthDict = new Dictionary<string, float>();
 
         private int m_PageIndex = 0;
+        private float defaultWidth = 0.4f;
 
         public override void OnInspectorGUI()
         {
@@ -160,6 +151,10 @@ namespace NRKernal
             }
 
             List<NRTrackingImageDatabaseEntry> dirtyEntries = database.GetDirtyQualityEntries();
+            if (database.isCliUpdated)
+            {
+                dirtyEntries = database.GetAllEntries();
+            }
             if (dirtyEntries.Count == 0)
             {
                 return;
@@ -238,6 +233,7 @@ namespace NRKernal
                     }
                 }
             }
+
             //if (!string.IsNullOrEmpty(error))
             //{
             //    Debug.Log("BuildImage error :" + error);
@@ -350,7 +346,7 @@ namespace NRKernal
             GUILayout.Space(15);
 
             var buttonStyle = new GUIStyle(GUI.skin.button);
-            buttonStyle.margin = new RectOffset(10, 10, 13, 0);
+            buttonStyle.margin = new RectOffset(0, 0, 13, 0);
 
             wasRemoved = GUILayout.Button("X", buttonStyle);
 
@@ -364,10 +360,39 @@ namespace NRKernal
             EditorGUILayout.LabelField(image.Name, labelStyle, GUILayout.Height(42), GUILayout.MaxWidth(80f));
 
             GUILayout.Space(5);
-            //updatedImage.Width = EditorGUILayout.FloatField(image.Width, textFieldStyle, GUILayout.MaxWidth(80f));
-            updatedImage.Width = image.Width;
-            EditorGUILayout.LabelField((image.Width / 1000).ToString(), labelStyle, GUILayout.Height(42), GUILayout.MaxWidth(80f));
+            float tempwidth;
+            string key = m_DatabaseForQualityJobs == null ? image.Name : m_DatabaseForQualityJobs.GUID + image.Name;
+            if (!m_TempWidthDict.TryGetValue(key, out tempwidth))
+            {
+                tempwidth = defaultWidth;
+                m_TempWidthDict.Add(key, defaultWidth);
+            }
+            tempwidth = EditorGUILayout.FloatField(tempwidth, textFieldStyle, GUILayout.MaxWidth(80f));
+            m_TempWidthDict.Remove(key);
+            m_TempWidthDict.Add(key, tempwidth);
 
+            var rect = GUILayoutUtility.GetLastRect();
+            var e = Event.current;
+            bool wasWidthChanged = false;
+            if (e.type == EventType.MouseDown && !rect.Contains(e.mousePosition))
+            {
+                var abs = Mathf.Abs(image.Width / 1000 - tempwidth);
+                if (abs > 0.01f)
+                {
+                    updatedImage.Width = tempwidth * 1000;
+                    wasWidthChanged = true;
+                    GUI.FocusControl(null);
+                }
+                else
+                {
+                    updatedImage.Width = image.Width;
+                }
+            }
+            else
+            {
+                updatedImage.Width = image.Width;
+            }
+            //EditorGUILayout.LabelField((image.Width / 1000).ToString(), labelStyle, GUILayout.Height(42), GUILayout.MaxWidth(80f));
 
             GUILayout.Space(5);
             EditorGUILayout.LabelField(QualityForDisplay(image.Quality), labelStyle,
@@ -377,7 +402,7 @@ namespace NRKernal
 
             updatedImage.Texture = EditorGUILayout.ObjectField(image.Texture, typeof(Texture2D), false,
                  GUILayout.Height(45), GUILayout.Width(45)) as Texture2D;
-            if (updatedImage.TextureGUID == image.TextureGUID)
+            if (updatedImage.TextureGUID == image.TextureGUID && !wasWidthChanged)
             {
                 updatedImage.Quality = image.Quality;
             }

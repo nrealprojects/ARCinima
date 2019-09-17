@@ -3,27 +3,21 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/          
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
 namespace NRKernal
 {
-    /// <summary>
-    /// A filter for trackable queries.
-    /// </summary>
+    /**
+    * @brief A filter for trackable queries.
+    */
     public enum NRTrackableQueryFilter
     {
-        /// <summary>
-        /// Indicates available trackables.
-        /// </summary>
+        // Indicates available trackables.
         All,
 
-        /// <summary>
-        /// Indicates new trackables detected in the current NRSDK Frame.
-        /// </summary>
+        // Indicates new trackables detected in the current NRSDK Frame.
         New,
     }
 }

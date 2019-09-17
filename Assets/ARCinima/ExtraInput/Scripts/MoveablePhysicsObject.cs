@@ -231,8 +231,6 @@ public class MoveablePhysicsObject : MonoBehaviour
 
     protected void OnDeselect()
     {
-        Debug.Log("OnDeselect");
-
         if (flexLaserVisual)
             flexLaserVisual.SelectedObject = null;
         flexLaserVisual = null;

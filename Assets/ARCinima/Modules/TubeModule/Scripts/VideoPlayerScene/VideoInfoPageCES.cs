@@ -74,7 +74,7 @@ namespace NREAL.AR.VideoPlayer
             }
             else
             {
-                NRDebug.LogError(www.error);
+                NRDebugger.LogError(www.error);
             }
         }
 

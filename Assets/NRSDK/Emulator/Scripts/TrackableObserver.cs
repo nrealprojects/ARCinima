@@ -40,11 +40,13 @@ public class TrackableObserver : MonoBehaviour
                 {
                     if (trackableImage.GetTrackingState() == TrackingState.Tracking)
                     {
-                        FoundEvent(trackableImage.GetCenterPose().position, trackableImage.GetCenterPose().rotation);
+                        if (FoundEvent != null)
+                            FoundEvent(trackableImage.GetCenterPose().position, trackableImage.GetCenterPose().rotation);
                     }
                     else
                     {
-                        LostEvnet();
+                        if (LostEvnet != null)
+                            LostEvnet();
                     }
                     break;
                 }
@@ -61,11 +63,13 @@ public class TrackableObserver : MonoBehaviour
                 {
                     if (trackablePlane.GetTrackingState() == TrackingState.Tracking)
                     {
-                        FoundEvent(trackablePlane.GetCenterPose().position, trackablePlane.GetCenterPose().rotation);
+                        if (FoundEvent != null)
+                            FoundEvent(trackablePlane.GetCenterPose().position, trackablePlane.GetCenterPose().rotation);
                     }
                     else
                     {
-                        LostEvnet();
+                        if (LostEvnet != null)
+                            LostEvnet();
                     }
                     break;
                 }

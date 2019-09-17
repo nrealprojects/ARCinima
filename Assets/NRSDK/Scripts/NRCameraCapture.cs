@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/                 
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -94,7 +92,7 @@ namespace NRKernal
             {
                 if (m_UpdateFrameRate <= 0 || m_UpdateFrameRate > 30)
                 {
-                    NRDebug.Log("Update frame rate should not lower then 1 and higher then 30.");
+                    NRDebugger.Log("Update frame rate should not lower then 1 and higher then 30.");
                     return;
                 }
                 m_UpdateFrameRate = value;
@@ -125,7 +123,7 @@ namespace NRKernal
         private void FirstFramReady()
         {
             Texture = new Texture2D(Resolution.width, Resolution.height, GetFormatByCamraImageFormat(ImageFormat), false);
-            NRDebug.Log("[NRCameraCapture] FirstFramReady : " + Resolution.ToString());
+            NRDebugger.Log("[NRCameraCapture] FirstFramReady : " + Resolution.ToString());
 
             if (OnFirstFrameReady != null)
             {

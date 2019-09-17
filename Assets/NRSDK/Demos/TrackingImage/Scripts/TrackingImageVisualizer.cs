@@ -1,62 +1,28 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="TrackingImageVisualizer.cs" company="Google">
-//
-// Copyright 2018 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// </copyright>
-//-----------------------------------------------------------------------
-
-namespace NRKernal.NRExamples
+﻿namespace NRKernal.NRExamples
 {
     using UnityEngine;
 
-    /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
     /// </summary>
     public class TrackingImageVisualizer : MonoBehaviour
     {
-        /// <summary>
-        /// The TrackingImage to visualize.
-        /// </summary>
+        // The TrackingImage to visualize.
         public NRTrackableImage Image;
 
-        /// <summary>
-        /// A model for the lower left corner of the frame to place when an image is detected.
-        /// </summary>
+        // A model for the lower left corner of the frame to place when an image is detected.
         public GameObject FrameLowerLeft;
 
-        /// <summary>
-        /// A model for the lower right corner of the frame to place when an image is detected.
-        /// </summary>
+        // A model for the lower right corner of the frame to place when an image is detected.
         public GameObject FrameLowerRight;
 
-        /// <summary>
         /// A model for the upper left corner of the frame to place when an image is detected.
-        /// </summary>
         public GameObject FrameUpperLeft;
 
-        /// <summary>
-        /// A model for the upper right corner of the frame to place when an image is detected.
-        /// </summary>
+        // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
         public GameObject Axis;
 
-        /// <summary>
-        /// The Unity Update method.
-        /// </summary>
         public void Update()
         {
             if (Image == null || Image.GetTrackingState() != TrackingState.Tracking)

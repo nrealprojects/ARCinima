@@ -3,9 +3,8 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/                                                                                                                         
+* https://www.nreal.ai/                  
+* 
 *****************************************************************************/
 
 namespace NRKernal
@@ -39,15 +38,16 @@ namespace NRKernal
 #if UNITY_EDITOR
         private void Update()
         {
+            float extent = transform.lossyScale.x * 1000;
             if (NREmulatorManager.Instance.IsInGameView(transform.position))
             {
                 NREmulatorManager.Instance.NativeEmulatorApi.UpdateTrackableData<NRTrackableImage>
-                (transform.position, transform.rotation, 0.5f, 0.5f, (uint)DatabaseIndex, TrackingState.Tracking);
+                (transform.position, transform.rotation, extent, extent, (uint)DatabaseIndex, TrackingState.Tracking);
             }
             else
             {
                 NREmulatorManager.Instance.NativeEmulatorApi.UpdateTrackableData<NRTrackableImage>
-                (transform.position, transform.rotation, 0.5f, 0.5f, (uint)DatabaseIndex, TrackingState.Stopped);
+                (transform.position, transform.rotation, extent, extent, (uint)DatabaseIndex, TrackingState.Stopped);
             }
 
         }

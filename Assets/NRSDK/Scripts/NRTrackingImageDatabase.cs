@@ -1,22 +1,11 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="TrackingImageDatabase.cs" company="Google">
-//
-// Copyright 2018 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/****************************************************************************
+* Copyright 2019 Nreal Techonology Limited. All rights reserved.
+*                                                                                                                                                          
+* This file is part of NRSDK.                                                                                                          
+*                                                                                                                                                           
+* https://www.nreal.ai/        
+* 
+*****************************************************************************/
 
 namespace NRKernal
 {
@@ -31,11 +20,11 @@ namespace NRKernal
     using System.Text;
 #endif
 
-    /// <summary>
-    /// A database storing a list of images to be detected and tracked by NRSDK.
-    ///
-    /// An image database supports up to 1000 images. Only one image database can be in use at any given time.
-    /// </summary>
+    /**
+    * @brief A database storing a list of images to be detected and tracked by NRSDK.
+    * 
+    * An image database supports up to 1000 images. Only one image database can be in use at any given time.
+    */
     public class NRTrackingImageDatabase : ScriptableObject
     {
         [SerializeField]
@@ -75,12 +64,31 @@ namespace NRKernal
 
         [SerializeField]
         private string m_CliVersion = string.Empty;
+
+        public bool isCliUpdated
+        {
+            get
+            {
+                string cliBinaryPath;
+                if (!FindCliBinaryPath(out cliBinaryPath))
+                {
+                    return false;
+                }
+
+                string currentCliVersion;
+                {
+                    string error;
+                    ShellHelper.RunCommand(cliBinaryPath, "-version", out currentCliVersion, out error);
+                }
+                //Debug.LogFormat("current version:{0} old version:{1}", currentCliVersion, m_CliVersion);
+
+                bool cliUpdated = m_CliVersion != currentCliVersion;
+                return cliUpdated;
+            }
+        }
 #endif
 
-
-        /// <summary>
-        /// Constructs a new <c>TrackingImageDatabase</c>.
-        /// </summary>
+        // Constructs a new <c>TrackingImageDatabase</c>.
         public NRTrackingImageDatabase()
         {
 #if UNITY_EDITOR
@@ -88,9 +96,7 @@ namespace NRKernal
 #endif
         }
 
-        /// <summary>
-        /// Gets the number of images in the database.
-        /// </summary>
+        // Gets the number of images in the database.
         public int Count
         {
             get
@@ -223,7 +229,7 @@ namespace NRKernal
                 {
                     // Read the zip bytes
                     m_RawData = File.ReadAllBytes(file_path);
-                    //Debug.Log("Generate raw data success!");
+                    //Debug.Log("Generate raw data success!" + file_path);
                     //m_IsNeedLoadRawData = false;
 
                     EditorUtility.SetDirty(this);
@@ -231,21 +237,17 @@ namespace NRKernal
                     AssetDatabase.SaveAssets();
                 }
             }));
+
+            UpdateClipVersion();
         }
         /// @endcond
-
-        /// @cond EXCLUDE_FROM_DOXYGEN
-        /// <summary>
-        /// Gets the image entries that require updating of the image quality score.
-        /// </summary>
-        /// <returns>A list of image entries that require updating of the image quality score.</returns>
-        public List<NRTrackingImageDatabaseEntry> GetDirtyQualityEntries()
+        /// 
+        private void UpdateClipVersion()
         {
-            var dirtyEntries = new List<NRTrackingImageDatabaseEntry>();
             string cliBinaryPath;
             if (!FindCliBinaryPath(out cliBinaryPath))
             {
-                return dirtyEntries;
+                return;
             }
 
             string currentCliVersion;
@@ -255,21 +257,17 @@ namespace NRKernal
             }
             //Debug.LogFormat("current version:{0} old version:{1}", currentCliVersion, m_CliVersion);
 
-            bool cliUpdated = m_CliVersion != currentCliVersion;
-            // When CLI is updated, mark all entries dirty.
-            if (cliUpdated)
-            {
-                for (int i = 0; i < m_Images.Count; ++i)
-                {
-                    var updatedImage = m_Images[i];
-                    updatedImage.Quality = string.Empty;
-                    m_Images[i] = updatedImage;
-                }
+            m_CliVersion = currentCliVersion;
+        }
 
-                m_CliVersion = currentCliVersion;
-                EditorUtility.SetDirty(this);
-            }
-
+        /// @cond EXCLUDE_FROM_DOXYGEN
+        /// <summary>
+        /// Gets the image entries that require updating of the image quality score.
+        /// </summary>
+        /// <returns>A list of image entries that require updating of the image quality score.</returns>
+        public List<NRTrackingImageDatabaseEntry> GetDirtyQualityEntries()
+        {
+            var dirtyEntries = new List<NRTrackingImageDatabaseEntry>();
             for (int i = 0; i < m_Images.Count; ++i)
             {
                 if (!string.IsNullOrEmpty(m_Images[i].Quality))
@@ -286,6 +284,18 @@ namespace NRKernal
             }
 
             return dirtyEntries;
+        }
+        /// @endcond
+
+        /// @cond EXCLUDE_FROM_DOXYGEN
+        public List<NRTrackingImageDatabaseEntry> GetAllEntries()
+        {
+            var allEntries = new List<NRTrackingImageDatabaseEntry>();
+            for (int i = 0; i < m_Images.Count; ++i)
+            {
+                allEntries.Add(m_Images[i]);
+            }
+            return allEntries;
         }
         /// @endcond
 

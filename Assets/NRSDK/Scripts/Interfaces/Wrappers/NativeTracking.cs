@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/         
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -30,7 +28,7 @@ namespace NRKernal
         public bool Create()
         {
             NativeResult result = NativeApi.NRTrackingCreate(ref m_TrackingHandle);
-            NRDebug.Log("[NativeSession Create :]" + result.ToString());
+            NRDebugger.Log("[NativeSession Create :]" + result.ToString());
             m_NativeInterface.TrackingHandle = m_TrackingHandle;
             return result == NativeResult.Success;
         }
@@ -38,28 +36,28 @@ namespace NRKernal
         public bool SetTrackingMode(TrackingMode mode)
         {
             NativeResult result = NativeApi.NRTrackingInitSetTrackingMode(m_TrackingHandle, mode);
-            NRDebug.Log("[NativeSession SetTrackingMode :]" + mode.ToString() + " result:" + result.ToString());
+            NRDebugger.Log("[NativeSession SetTrackingMode :]" + mode.ToString() + " result:" + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool Start()
         {
             NativeResult result = NativeApi.NRTrackingStart(m_TrackingHandle);
-            NRDebug.Log("[NativeSession Start :]" + result.ToString());
+            NRDebugger.Log("[NativeSession Start :]" + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool Pause()
         {
             NativeResult result = NativeApi.NRTrackingPause(m_TrackingHandle);
-            NRDebug.Log("[NativeSession Pause :]" + result.ToString());
+            NRDebugger.Log("[NativeSession Pause :]" + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool Resume()
         {
             NativeResult result = NativeApi.NRTrackingResume(m_TrackingHandle);
-            NRDebug.Log("[NativeSession Resume :]" + result.ToString());
+            NRDebugger.Log("[NativeSession Resume :]" + result.ToString());
             return result == NativeResult.Success;
         }
 
@@ -69,13 +67,13 @@ namespace NRKernal
         public void Recenter()
         {
             var result = NativeApi.NRTrackingRecenter(m_TrackingHandle);
-            NRDebug.Log("[NativeSession Recenter] :" + result.ToString());
+            NRDebugger.Log("[NativeSession Recenter] :" + result.ToString());
         }
 
         public bool Destroy()
         {
             NativeResult result = NativeApi.NRTrackingDestroy(m_TrackingHandle);
-            NRDebug.Log("[NativeSession Destroy :]" + result.ToString());
+            NRDebugger.Log("[NativeSession Destroy :]" + result.ToString());
             return result == NativeResult.Success;
         }
 

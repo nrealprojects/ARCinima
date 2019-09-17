@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -39,7 +37,7 @@ namespace NRKernal
 
             if (m_ConfigHandle == 0)
             {
-                NRDebug.LogError("Faild to Create ARSessionConfig!!!");
+                NRDebugger.LogError("Faild to Create ARSessionConfig!!!");
                 return;
             }
 
@@ -63,7 +61,7 @@ namespace NRKernal
                         else
                         {
                             var result = SetTrackableImageDataBase(m_ConfigHandle, 0);
-                            NRDebug.Log("[Disable trackable image] result : " + result);
+                            NRDebugger.Log("[Disable trackable image] result : " + result);
                         }
                         break;
                     case TrackableImageFindingMode.ENABLE:
@@ -73,14 +71,14 @@ namespace NRKernal
                             {
                                 m_DatabaseHandle = m_NativeTrackableImage.CreateDataBase();
                                 bool result = m_NativeTrackableImage.LoadDataBase(m_DatabaseHandle, config.TrackingImageDatabase.TrackingImageDataPath);
-                                NRDebug.Log("[LoadDataBase] result : " + result);
+                                NRDebugger.Log("[LoadDataBase] result : " + result);
                                 result = SetTrackableImageDataBase(m_ConfigHandle, m_DatabaseHandle);
-                                NRDebug.Log("[SetTrackableImageDataBase] result : " + result);
+                                NRDebugger.Log("[SetTrackableImageDataBase] result : " + result);
                             }
                             else
                             {
                                 var result = SetTrackableImageDataBase(m_ConfigHandle, 0);
-                                NRDebug.Log("[Disable trackable image] result : " + result);
+                                NRDebugger.Log("[Disable trackable image] result : " + result);
                             }
                         }
                         break;

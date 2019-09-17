@@ -3,9 +3,7 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
-* https://www.nreal.ai/         
+* https://www.nreal.ai/        
 * 
 *****************************************************************************/
 
@@ -28,7 +26,7 @@ namespace NRKernal
         public bool Create()
         {
             var result = NativeApi.NRRGBCameraCreate(ref m_NativeCameraHandle);
-            NRDebug.Log("[NativeCamera] Create: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] Create: " + result.ToString());
             return result == NativeResult.Success;
         }
 
@@ -44,7 +42,7 @@ namespace NRKernal
         {
             NativeResolution resolution = new NativeResolution(1280, 720);
             var result = NativeApi.NRRGBCameraImageGetResolution(m_NativeCameraHandle, imageHandle, ref resolution);
-            NRDebug.Log("[NativeCamera] GetResolution: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] GetResolution: " + result.ToString());
             return resolution;
         }
 
@@ -58,28 +56,28 @@ namespace NRKernal
         public bool SetCaptureCallback(NRRGBCameraImageCallback callback)
         {
             var result = NativeApi.NRRGBCameraSetCaptureCallback(m_NativeCameraHandle, callback);
-            NRDebug.Log("[NativeCamera] SetCaptureCallback: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] SetCaptureCallback: " + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool SetImageFormat(CameraImageFormat format)
         {
             var result = NativeApi.NRRGBCameraSetImageFormat(m_NativeCameraHandle, format);
-            NRDebug.Log("[NativeCamera] SetImageFormat: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] SetImageFormat: " + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool StartCapture()
         {
             var result = NativeApi.NRRGBCameraStartCapture(m_NativeCameraHandle);
-            NRDebug.Log("[NativeCamera] StartCapture: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] StartCapture: " + result.ToString());
             return result == NativeResult.Success;
         }
 
         public bool StopCapture()
         {
             var result = NativeApi.NRRGBCameraStopCapture(m_NativeCameraHandle);
-            NRDebug.Log("[NativeCamera] StopCapture: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] StopCapture: " + result.ToString());
             return result == NativeResult.Success;
         }
 
@@ -92,7 +90,7 @@ namespace NRKernal
         public bool Release()
         {
             var result = NativeApi.NRRGBCameraDestroy(m_NativeCameraHandle);
-            NRDebug.Log("[NativeCamera] Release: " + result.ToString());
+            NRDebugger.Log("[NativeCamera] Release: " + result.ToString());
             return result == NativeResult.Success;
         }
 

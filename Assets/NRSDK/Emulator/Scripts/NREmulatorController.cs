@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/         
 * 
 *****************************************************************************/
@@ -134,15 +132,15 @@ namespace NRKernal
 
             if (NRInput.GetButtonDown(ControllerButton.TRIGGER))
             {
-                NRDebug.Log("Click down Trigger button !!!");
+                NRDebugger.Log("Click down Trigger button !!!");
             }
             else if (NRInput.GetButtonDown(ControllerButton.APP))
             {
-                NRDebug.Log("Click down App button !!!");
+                NRDebugger.Log("Click down App button !!!");
             }
             else if (NRInput.GetButtonDown(ControllerButton.HOME))
             {
-                NRDebug.Log("Click down Home button !!!");
+                NRDebugger.Log("Click down Home button !!!");
             }
         }
 #endif

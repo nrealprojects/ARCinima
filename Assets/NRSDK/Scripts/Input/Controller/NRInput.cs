@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/         
 * 
 *****************************************************************************/
@@ -242,8 +240,15 @@ namespace NRKernal
 
         private void InitEmulator()
         {
+            if (!NREmulatorManager.Inited && !GameObject.Find("NREmulatorManager"))
+            {
+                NREmulatorManager.Inited = true;
+                GameObject.Instantiate(Resources.Load("Prefabs/NREmulatorManager"));
+            }
             if (!GameObject.Find("NREmulatorController"))
+            {
                 Instantiate(Resources.Load<GameObject>("Prefabs/NREmulatorController"));
+            }
         }
 
         private Transform GetCameraCenter()

@@ -1,41 +1,17 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="TrackingImageExampleController.cs" company="Google">
-//
-// Copyright 2018 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// </copyright>
-//-----------------------------------------------------------------------
-
-namespace NRKernal.NRExamples
+﻿namespace NRKernal.NRExamples
 {
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary>
-    /// Controller for TrackingImage example.
-    /// </summary>
+    /**
+    * @brief Controller for TrackingImage example.
+    */
     public class TrackingImageExampleController : MonoBehaviour
     {
-        /// <summary>
-        /// A prefab for visualizing an TrackingImage.
-        /// </summary>
+        // A prefab for visualizing an TrackingImage.
         public TrackingImageVisualizer TrackingImageVisualizerPrefab;
 
-        /// <summary>
-        /// The overlay containing the fit to scan user guide.
-        /// </summary>
+        // The overlay containing the fit to scan user guide.
         public GameObject FitToScanOverlay;
 
         private Dictionary<int, TrackingImageVisualizer> m_Visualizers
@@ -43,12 +19,9 @@ namespace NRKernal.NRExamples
 
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
-        /// <summary>
-        /// The Unity Update method.
-        /// </summary>
         public void Update()
         {
-#if !UNITY_DEITOR
+#if !UNITY_EDITOR
             // Check that motion tracking is tracking.
             if (NRFrame.SessionStatus != SessionState.Tracking)
             {
@@ -66,7 +39,7 @@ namespace NRKernal.NRExamples
                 m_Visualizers.TryGetValue(image.GetDataBaseIndex(), out visualizer);
                 if (image.GetTrackingState() == TrackingState.Tracking && visualizer == null)
                 {
-                    NRDebug.Log("Create new TrackingImageVisualizer!");
+                    NRDebugger.Log("Create new TrackingImageVisualizer!");
                     // Create an anchor to ensure that NRSDK keeps tracking this augmented image.
                     visualizer = (TrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;

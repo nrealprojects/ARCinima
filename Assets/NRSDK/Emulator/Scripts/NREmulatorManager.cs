@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/               
 * 
 *****************************************************************************/
@@ -22,6 +20,8 @@ namespace NRKernal
         public NativeEmulator NativeEmulatorApi { get; set; }
 
         public static int SIMPlaneID = 0;
+
+        public static bool Inited = false;
 
         private void Start()
         {
@@ -49,7 +49,7 @@ namespace NRKernal
 
         public bool IsInGameView(Vector3 worldPos)
         {
-            Camera cam = GameObject.Find("LeftCamera").GetComponent<Camera>();
+            Camera cam = GameObject.Find("CenterCamera").GetComponent<Camera>();
             Transform camTransform = cam.transform;
             Vector2 viewPos = cam.WorldToViewportPoint(worldPos);
             Vector3 dir = (worldPos - camTransform.position).normalized;

@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/               
 * 
 *****************************************************************************/
@@ -44,16 +42,16 @@ namespace NRKernal
 
         public bool UpdateTrackableImageData(Vector3 centerPos, Quaternion centerQua, float extentX, float extentZ, UInt32 identifier, TrackingState state)
         {
-            NativeVector3f pos = new NativeVector3f(centerPos);
-            NativeVector4f qua = new NativeVector4f(new Vector4(centerQua.x, centerQua.y, centerQua.z, centerQua.w));
+            NativeVector3f pos = new NativeVector3f(new Vector3(centerPos.x, centerPos.y, -centerPos.z));
+            NativeVector4f qua = new NativeVector4f(new Vector4(-centerQua.x, -centerQua.y, centerQua.z, centerQua.w));
             NativeResult result = NativeApi.NRSIMTrackingUpdateTrackableImageData(m_TrackingHandle, pos, qua, extentX, extentZ, identifier, (int)state);
             return result == NativeResult.Success;
         }
 
         public bool UpdateTrackablePlaneData(Vector3 centerPos, Quaternion centerQua, float extentX, float extentZ, UInt32 identifier, TrackingState state)
         {
-            NativeVector3f pos = new NativeVector3f(centerPos);
-            NativeVector4f qua = new NativeVector4f(new Vector4(centerQua.x, centerQua.y, centerQua.z, centerQua.w));
+            NativeVector3f pos = new NativeVector3f(new Vector3(centerPos.x, centerPos.y, -centerPos.z));
+            NativeVector4f qua = new NativeVector4f(new Vector4(-centerQua.x, -centerQua.y, centerQua.z, centerQua.w));
             NativeResult result = NativeApi.NRSIMTrackingUpdateTrackablePlaneData(m_TrackingHandle, pos, qua, extentX, extentZ, identifier, (int)state);
             return result == NativeResult.Success;
         }

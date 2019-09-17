@@ -1,4 +1,13 @@
-﻿namespace NRKernal
+﻿/****************************************************************************
+* Copyright 2019 Nreal Techonology Limited. All rights reserved.
+*                                                                                                                                                          
+* This file is part of NRSDK.                                                                                                          
+*                                                                                                                                                           
+* https://www.nreal.ai/        
+* 
+*****************************************************************************/
+
+namespace NRKernal
 {
     using System;
     using System.Collections.Generic;
@@ -11,8 +20,6 @@
      */
     internal class NRTrackableManager
     {
-        private int m_LastUpdateFrame = -1;
-
         private Dictionary<UInt64, NRTrackable> m_TrackableDict = new Dictionary<UInt64, NRTrackable>();
 
         private Dictionary<TrackableType, Dictionary<UInt64, NRTrackable>> m_TrackableTypeDict = new Dictionary<TrackableType, Dictionary<ulong, NRTrackable>>();
@@ -105,25 +112,20 @@
         */
         public void GetTrackables<T>(List<T> trackables, NRTrackableQueryFilter filter) where T : NRTrackable
         {
-            if (m_LastUpdateFrame < Time.frameCount)
+            TrackableType t_type = GetTrackableType<T>();
+            // Update trackable by type
+            UpdateTrackables(t_type);
+
+            // Find the new trackable in this frame
+            m_NewTrackables.Clear();
+            for (int i = 0; i < m_AllTrackables.Count; i++)
             {
-                TrackableType t_type = GetTrackableType<T>();
-                // Update trackable by type
-                UpdateTrackables(t_type);
-
-                // Find the new trackable in this frame
-                m_NewTrackables.Clear();
-                for (int i = 0; i < m_AllTrackables.Count; i++)
+                NRTrackable trackable = m_AllTrackables[i];
+                if (!m_OldTrackables.Contains(trackable))
                 {
-                    NRTrackable trackable = m_AllTrackables[i];
-                    if (!m_OldTrackables.Contains(trackable))
-                    {
-                        m_NewTrackables.Add(trackable);
-                        m_OldTrackables.Add(trackable);
-                    }
+                    m_NewTrackables.Add(trackable);
+                    m_OldTrackables.Add(trackable);
                 }
-
-                m_LastUpdateFrame = Time.frameCount;
             }
 
             trackables.Clear();

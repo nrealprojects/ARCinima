@@ -3,8 +3,6 @@
 *                                                                                                                                                          
 * This file is part of NRSDK.                                                                                                          
 *                                                                                                                                                           
-* NRSDK is distributed in the hope that it will be usefull                                                              
-*                                                                                                                                                           
 * https://www.nreal.ai/        
 * 
 *****************************************************************************/
@@ -25,7 +23,7 @@ namespace NRKernal
         public bool Create()
         {
             NativeResult result = NativeApi.NRHMDCreate(ref m_HmdHandle);
-            NRDebug.Log("[NativeHMD Create]:" + result.ToString());
+            NRDebugger.Log("[NativeHMD Create]:" + result.ToString());
             return result == NativeResult.Success;
         }
 
@@ -57,7 +55,7 @@ namespace NRKernal
         {
             NativeResolution resolution = new NativeResolution(3840, 1080);
             NativeApi.NRHMDGetEyeResolution(m_HmdHandle, (int)NativeEye.LEFT, ref resolution);
-            NRDebug.Log("[NativeHMD GetEyeResolution]:" + resolution.ToString());
+            NRDebugger.Log("[NativeHMD GetEyeResolution]:" + resolution.ToString());
             return resolution;
         }
 
