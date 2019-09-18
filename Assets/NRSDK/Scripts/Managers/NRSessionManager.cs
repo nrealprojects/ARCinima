@@ -122,11 +122,11 @@ namespace NRKernal
             }
             string deploy_path = database.TrackingImageDataOutPutPath;
             NRDebugger.Log("[TrackingImageDatabase] DeployData to path :" + deploy_path);
-            if (Directory.Exists(database.TrackingImageDataPath))
-            {
-                NRDebugger.Log("augmented image data is exit!");
-                return;
-            }
+            //if (Directory.Exists(database.TrackingImageDataPath))
+            //{
+            //    NRDebugger.Log("augmented image data is exit!");
+            //    return;
+            //}
             ZipUtility.UnzipFile(database.RawData, deploy_path, NativeConstants.ZipKey);
         }
 

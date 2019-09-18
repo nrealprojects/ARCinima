@@ -2,11 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
-using UnityEngine.EventSystems;
 
 namespace NREAL.AR
 {
-    public class ButtonBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    [RequireComponent(typeof(ARInteractiveItem))]
+    public class ButtonBase : MonoBehaviour
     {
         public delegate void ButtonBaseCallBack(ButtonBase button);
         public ButtonBaseCallBack onEnter;
@@ -16,17 +16,33 @@ namespace NREAL.AR
         public Image m_ImageActive;
         public Color m_NormalColor;
         public Color m_HoverColor;
-        public float hoverScaleFactor = 1f;
-        public float hoverScaleTime = 0.4f;
-
+        private ARInteractiveItem _interactiveItem;
         private Image currentImage;
+
         private Coroutine autoClick = null;
-        private Vector3 m_OriginScale;
 
         private void Awake()
         {
+            _interactiveItem = gameObject.GetComponent<ARInteractiveItem>();
+            if (_interactiveItem == null)
+            {
+                _interactiveItem = gameObject.AddComponent<ARInteractiveItem>();
+            }
             currentImage = m_Image;
-            m_OriginScale = transform.localScale;
+        }
+
+        private void OnEnable()
+        {
+            _interactiveItem.OnHover += OnFocusEnter;
+            _interactiveItem.OnOut += OnFocusExit;
+            _interactiveItem.OnClick += OnClick;
+        }
+
+        private void OnDisable()
+        {
+            _interactiveItem.OnHover -= OnFocusEnter;
+            _interactiveItem.OnOut -= OnFocusExit;
+            _interactiveItem.OnClick -= OnClick;
         }
 
         public void SwitchImage(bool active)
@@ -51,11 +67,21 @@ namespace NREAL.AR
             {
                 onEnter(this);
             }
+            //CursorHover.Instance.StopFill();
+            /*
+			if (Constant.buttonAutoClick)
+            {
+                if (autoClick != null)
+                {
+                    StopCoroutine(autoClick);
+                    autoClick = null;
+                }
+                autoClick = StartCoroutine(AutoClick());
+            }
+            */
 
             if (currentImage != null)
                 currentImage.color = m_HoverColor;
-            if (hoverScaleFactor != 1f)
-                transform.DOScale(m_OriginScale * hoverScaleFactor, hoverScaleTime);
         }
 
         private void OnFocusExit()
@@ -74,8 +100,6 @@ namespace NREAL.AR
 
             if (currentImage != null)
                 currentImage.color = m_NormalColor;
-            if (hoverScaleFactor != 1f)
-                transform.DOScale(m_OriginScale, hoverScaleTime);
         }
 
         private void OnClick()
@@ -94,21 +118,6 @@ namespace NREAL.AR
             {
                 onClick(this);
             }
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            OnClick();
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            OnFocusEnter();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            OnFocusExit();
         }
     }
 }

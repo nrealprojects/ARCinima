@@ -52,7 +52,6 @@ namespace NREAL.AR.VideoPlayer
         [SerializeField]
         float m_ChangeStateMoveTime = 1.2f;
 
-
         private Vector3 originpos;
 
         private Transform miniSizeTarget;
@@ -161,8 +160,8 @@ namespace NREAL.AR.VideoPlayer
             m_PlayBtn.gameObject.SetActive(false);
             m_QuitIcon.SetActive(false);
 
-            m_ScreenRegion.OnHover += OnScreenRegionEnter;
-            m_ScreenRegion.OnOut += OnScreenRegionExit;
+            //m_ScreenRegion.OnHover += OnScreenRegionEnter;
+            //m_ScreenRegion.OnOut += OnScreenRegionExit;
             m_UIControllerRegion.OnHover += OnUIControllerRegionEnter;
             m_UIControllerRegion.OnOut += OnUIControllerRegionOut;
             m_PlayBtn.onClick += OnPlayBtnClick;
@@ -314,8 +313,8 @@ namespace NREAL.AR.VideoPlayer
 
         private void OnScreenRegionExit()
         {
-            //NRInput.ReticleVisualActive = true;
-            // m_CurrentTime.transform.parent.gameObject.SetActive(true);
+            NRInput.ReticleVisualActive = true;
+            m_CurrentTime.transform.parent.gameObject.SetActive(true);
         }
 
         private void OnUIControllerRegionEnter()
@@ -325,11 +324,11 @@ namespace NREAL.AR.VideoPlayer
 
         private void OnUIControllerRegionOut()
         {
-            //if ((ARControllerManager.Instance.GetCurrentInteractible())
-            //    && (ARControllerManager.Instance.GetCurrentInteractible().gameObject.tag.Equals("VideoController")) == false)
-            //{
-            //    m_CurrentTime.transform.parent.gameObject.SetActive(false);
-            //}
+            if (NREventCenter.GetCurrentRaycastTarget() == null
+                || !(NREventCenter.GetCurrentRaycastTarget().tag.Equals("VideoController")))
+            {
+                m_CurrentTime.transform.parent.gameObject.SetActive(false);
+            }
         }
 
         private void OnReturnClick(ButtonBase button)

@@ -7,10 +7,10 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
 {
     public static bool forceDeselectOnce = false;
 
-    public event Action OnHover;       
-    public event Action OnOut;         
-    public event Action OnClick; 
-    public event Action OnUp;           
+    public event Action OnHover;
+    public event Action OnOut;
+    public event Action OnClick;
+    public event Action OnUp;
     public event Action OnDown;
     public event Action OnLongPress;
     public event Action OnSelected;
@@ -94,7 +94,7 @@ public class ARInteractiveItem : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     public void Deselected()
     {
-        if(IsBeingSelected)
+        if (IsBeingSelected)
         {
             if (OnDeselected != null)
                 OnDeselected();

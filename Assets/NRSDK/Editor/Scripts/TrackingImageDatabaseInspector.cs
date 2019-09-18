@@ -364,8 +364,8 @@ namespace NRKernal
             string key = m_DatabaseForQualityJobs == null ? image.Name : m_DatabaseForQualityJobs.GUID + image.Name;
             if (!m_TempWidthDict.TryGetValue(key, out tempwidth))
             {
-                tempwidth = defaultWidth;
-                m_TempWidthDict.Add(key, defaultWidth);
+                tempwidth = image.Width * 0.001f;
+                m_TempWidthDict.Add(key, tempwidth);
             }
             tempwidth = EditorGUILayout.FloatField(tempwidth, textFieldStyle, GUILayout.MaxWidth(80f));
             m_TempWidthDict.Remove(key);
