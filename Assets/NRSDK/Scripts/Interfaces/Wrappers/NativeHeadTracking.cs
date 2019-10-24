@@ -33,26 +33,34 @@ namespace NRKernal
             return result == NativeResult.Success;
         }
 
-        public Pose GetHeadPose()
+        public bool GetHeadPose(ref Pose pose, UInt64 timestamp = 0, UInt64 predict = 0)
         {
             UInt64 headPoseHandle = 0;
             UInt64 hmd_nanos = 0;
             var result = NativeApi.NRTrackingGetHMDTimeNanos(m_NativeInterface.TrackingHandle, ref hmd_nanos);
-
-            UInt64 predict_time = 0;
-            NativeApi.NRHeadTrackingGetRecommendPredictTime(m_NativeInterface.TrackingHandle, headTrackingHandle, ref predict_time);
-            hmd_nanos += predict_time;
-            result = NativeApi.NRHeadTrackingAcquireTrackingPose(m_NativeInterface.TrackingHandle, headTrackingHandle, hmd_nanos, ref headPoseHandle);
-            //NRDebuger.Log("[NativeHeadTracking Create :]" + m_NativeInterface.TrackingHandle + " head tracking handle:" + headTrackingHandle.ToString());
-            NativeMat4f headpos_native = new NativeMat4f(Matrix4x4.identity);
-            result = NativeApi.NRTrackingPoseGetPose(m_NativeInterface.TrackingHandle, headPoseHandle, ref headpos_native);
-            Pose head_pose = Pose.identity;
-            if (result == NativeResult.Success)
+            var temp = hmd_nanos;
+            if (timestamp != 0)
             {
-                ConversionUtility.ApiPoseToUnityPose(headpos_native, out head_pose);
+                hmd_nanos = timestamp;
             }
+            else if (predict != 0)
+            {
+                hmd_nanos -= predict;
+            }
+            else
+            {
+                UInt64 predict_time = 0;
+                NativeApi.NRHeadTrackingGetRecommendPredictTime(m_NativeInterface.TrackingHandle, headTrackingHandle, ref predict_time);
+                hmd_nanos += predict_time;
+            }
+
+            var acquireTrackingPoseResult = NativeApi.NRHeadTrackingAcquireTrackingPose(m_NativeInterface.TrackingHandle, headTrackingHandle, hmd_nanos, ref headPoseHandle);
+
+            NativeMat4f headpos_native = new NativeMat4f(Matrix4x4.identity);
+            var getPoseResult = NativeApi.NRTrackingPoseGetPose(m_NativeInterface.TrackingHandle, headPoseHandle, ref headpos_native);
+            ConversionUtility.ApiPoseToUnityPose(headpos_native, out pose);
             NativeApi.NRTrackingPoseDestroy(m_NativeInterface.TrackingHandle, headPoseHandle);
-            return head_pose;
+            return (acquireTrackingPoseResult == NativeResult.Success) && (getPoseResult == NativeResult.Success);
         }
 
         public LostTrackingReason GetTrackingLostReason()

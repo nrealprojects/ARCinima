@@ -6,51 +6,34 @@ namespace NRKernal.NRExamples
     public class CameraCaptureController : MonoBehaviour
     {
         public RawImage CaptureImage;
-        private NRCameraCapture CameraCapture { get; set; }
+        private NRRGBCamTexture RGBCamTexture { get; set; }
 
         public Text FrameCount;
 
-        [Header("RGB Camera capture frame rate")]
-        public int FrameRate;
-
         void Start()
         {
-            CameraCapture = gameObject.AddComponent<NRCameraCapture>();
-            CameraCapture.ImageFormat = CameraImageFormat.RGB_888;
-            CameraCapture.UpdateFrameRate = FrameRate;
-            CameraCapture.OnFirstFrameReady += OnFirstFrameReady;
-            CameraCapture.OnError += OnError;
-
-            CameraCapture.Play();
+            RGBCamTexture = new NRRGBCamTexture();
+            CaptureImage.texture = RGBCamTexture.GetTexture();
+            RGBCamTexture.Play();
         }
 
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                CameraCapture.Play();
+                RGBCamTexture.Play();
             }
             if (Input.GetKeyDown(KeyCode.T))
             {
-                CameraCapture.Stop();
+                RGBCamTexture.Stop();
             }
 
-            FrameCount.text = CameraCapture.FrameCount.ToString();
-        }
-
-        private void OnFirstFrameReady()
-        {
-            CaptureImage.texture = CameraCapture.Texture;
-        }
-
-        private void OnError(string msg)
-        {
-            Debug.Log(msg);
+            FrameCount.text = RGBCamTexture.FrameCount.ToString();
         }
 
         void OnDestroy()
         {
-            CameraCapture.Release();
+            RGBCamTexture.Stop();
         }
     }
 }

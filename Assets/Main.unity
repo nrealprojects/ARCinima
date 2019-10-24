@@ -23955,7 +23955,7 @@ GameObject:
   - component: {fileID: 1044669210}
   - component: {fileID: 1044669212}
   - component: {fileID: 1044669211}
-  m_Layer: 16
+  m_Layer: 9
   m_Name: RightScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24462,7 +24462,7 @@ GameObject:
   - component: {fileID: 1123450070}
   - component: {fileID: 1123450072}
   - component: {fileID: 1123450071}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: LeftScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30253,6 +30253,16 @@ Prefab:
     - target: {fileID: 4275651716754104, guid: 665d8158924bd2648a94fb3f87691bbb, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20850121355348172, guid: 665d8158924bd2648a94fb3f87691bbb,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 311
+      objectReference: {fileID: 0}
+    - target: {fileID: 20787554590591570, guid: 665d8158924bd2648a94fb3f87691bbb,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 567
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665d8158924bd2648a94fb3f87691bbb, type: 2}
@@ -42822,6 +42832,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1960955496
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470090393519672, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c87ea462f3a4c8d4a9827716bd892608, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1977918788
 GameObject:
   m_ObjectHideFlags: 0
@@ -43396,8 +43448,6 @@ MonoBehaviour:
   movieRightScreenRenderer: {fileID: 1044669211}
   panoLeftScreenRenderer: {fileID: 1563404674}
   panoRightScreenRenderer: {fileID: 444384852}
-  movieLeftScreenCurveRenderer: {fileID: 0}
-  movieRightScreenCurveRenderer: {fileID: 0}
   movieScreen: {fileID: 1647685282}
   panoScreen: {fileID: 860188207}
   screenType: 0

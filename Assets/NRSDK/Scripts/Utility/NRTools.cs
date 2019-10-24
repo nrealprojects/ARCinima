@@ -9,6 +9,7 @@
 
 namespace NRKernal
 {
+    using System;
     using UnityEngine;
 
     /// @cond EXCLUDE_FROM_DOXYGEN
@@ -53,6 +54,12 @@ namespace NRKernal
             int m = (s % 3600) / 60;
             s = (s % 3600) % 60;
             return string.Format("{0}:{1}:{2}", h > 10 ? h.ToString() : "0" + h, m > 10 ? m.ToString() : "0" + m, s > 10 ? s.ToString() : "0" + s);
+        }
+
+        public static ulong GetTimeStamp()
+        {
+            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToUInt64(ts.TotalMilliseconds);
         }
     }
     /// @endcond

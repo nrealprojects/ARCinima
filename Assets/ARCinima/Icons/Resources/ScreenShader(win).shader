@@ -4,11 +4,11 @@
 	}
 
 		SubShader{
-			Tags {"Queue" = "Transparent-100" "IgnoreProjector" = "True" "RenderType" = "Opaque"}
+			//Tags {"Queue" = "Transparent-100" "IgnoreProjector" = "True" "RenderType" = "Opaque"}
 			LOD 100
 
-			ZWrite Off
-			Blend SrcAlpha OneMinusSrcAlpha
+			ZWrite On
+			//Blend SrcAlpha OneMinusSrcAlpha
 
 			Pass {
 				CGPROGRAM
@@ -50,7 +50,7 @@
 						uv.x = i.texcoord.x;
 						uv.y = 1 - i.texcoord.y;
 						fixed4 col = tex2D(_MainTex, uv);
-						col.rgb = GammaToLinearSpace(col.rgb);
+						//col.rgb = GammaToLinearSpace(col.rgb);
 						return col;
 					}
 				ENDCG

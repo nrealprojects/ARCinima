@@ -4,11 +4,11 @@
 	}
 
 		SubShader{
-			Tags {"Queue" = "Transparent-100" "IgnoreProjector" = "True" "RenderType" = "Opaque"}
+			//Tags {"Queue" = "Transparent-100" "IgnoreProjector" = "True" "RenderType" = "Opaque"}
 			LOD 100
 
-			ZWrite Off
-			Blend SrcAlpha OneMinusSrcAlpha
+			//ZWrite On
+			//Blend SrcAlpha OneMinusSrcAlpha
 
 			Pass {
 				CGPROGRAM

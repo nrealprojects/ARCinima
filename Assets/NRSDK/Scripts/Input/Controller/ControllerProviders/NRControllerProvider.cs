@@ -33,20 +33,28 @@ namespace NRKernal
             {
                 if (!Inited)
                     return 0;
+#if !UNITY_EDITOR_OSX
                 return m_NativeController.GetControllerCount();
+#else   
+                return 0;
+#endif
             }
         }
 
         public override void OnPause()
         {
+#if !UNITY_EDITOR_OSX
             if (m_NativeController != null)
                 m_NativeController.Pause();
+#endif
         }
 
         public override void OnResume()
         {
+#if !UNITY_EDITOR_OSX
             if (m_NativeController != null)
                 m_NativeController.Resume();
+#endif
         }
 
         public override void Update()
@@ -70,11 +78,13 @@ namespace NRKernal
 
         public override void OnDestroy()
         {
+#if !UNITY_EDITOR_OSX
             if (m_NativeController != null)
             {
                 m_NativeController.Destroy();
                 m_NativeController = null;
             }
+#endif
         }
 
         public override void TriggerHapticVibration(int index, float durationSeconds = 0.1f, float frequency = 1000f, float amplitude = 0.5f)
@@ -89,6 +99,7 @@ namespace NRKernal
         private void InitNativeController()
         {
             m_NativeController = new NativeController();
+#if !UNITY_EDITOR_OSX
             if (m_NativeController.Init())
             {
                 Inited = true;
@@ -99,6 +110,7 @@ namespace NRKernal
                 m_NativeController = null;
                 Debug.LogError("NRControllerProvider Init Failed !!");
             }
+#endif
             m_NeedInit = false;
         }
 

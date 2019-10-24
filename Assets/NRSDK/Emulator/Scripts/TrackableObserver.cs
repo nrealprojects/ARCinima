@@ -15,7 +15,6 @@ public class TrackableObserver : MonoBehaviour
     private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
     private List<NRTrackablePlane> m_TempTrackingPlane = new List<NRTrackablePlane>();
 
-
     public enum TrackableType
     {
         TrackableImage,
@@ -73,7 +72,6 @@ public class TrackableObserver : MonoBehaviour
                     }
                     break;
                 }
-
             }
         }
     }

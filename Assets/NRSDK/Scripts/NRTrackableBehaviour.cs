@@ -36,11 +36,52 @@ namespace NRKernal
         [HideInInspector, SerializeField]
         protected int m_DatabaseIndex = -1;
 
-        public string TrackableName { get { return m_TrackableName; } set { m_TrackableName = value; } }
-        public bool PreserveChildSize { get { return m_PreserveChildSize; } set { m_PreserveChildSize = value; } }
-        public bool InitializedInEditor { get { return m_InitializedInEditor; } set { m_InitializedInEditor = value; } }
-        public int DatabaseIndex { get { return m_DatabaseIndex; } set { m_DatabaseIndex = value; } }
+        public string TrackableName
+        {
+            get
+            {
+                return m_TrackableName;
+            }
+            set
+            {
+                m_TrackableName = value;
+            }
+        }
 
+        public bool PreserveChildSize
+        {
+            get
+            {
+                return m_PreserveChildSize;
+            }
+            set
+            {
+                m_PreserveChildSize = value;
+            }
+        }
 
+        public bool InitializedInEditor
+        {
+            get
+            {
+                return m_InitializedInEditor;
+            }
+            set
+            {
+                m_InitializedInEditor = value;
+            }
+        }
+
+        public int DatabaseIndex
+        {
+            get
+            {
+                return m_DatabaseIndex;
+            }
+            set
+            {
+                m_DatabaseIndex = value;
+            }
+        }
     }
 }

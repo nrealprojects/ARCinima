@@ -49,7 +49,7 @@ namespace NRKernal
         private readonly RenderTexture[] eyeTextures = new RenderTexture[EyeTextureCount];
         private Dictionary<RenderTexture, IntPtr> m_RTDict = new Dictionary<RenderTexture, IntPtr>();
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
         private int currentEyeTextureIdx = 0;
         private int nextEyeTextureIdx = 0;
 #endif
@@ -74,7 +74,7 @@ namespace NRKernal
             rightCamera = rightcamera;
             OnUpdatePose = poseprovider;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
             leftCamera.depthTextureMode = DepthTextureMode.Depth;
             rightCamera.depthTextureMode = DepthTextureMode.Depth;
 
@@ -90,7 +90,7 @@ namespace NRKernal
 
         private void StartUp()
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
             m_NativeRenderring = new NativeRenderring();
             m_NativeRenderring.Create();
 
@@ -104,7 +104,7 @@ namespace NRKernal
          */
         public void Pause()
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
             if (!m_IsInitialize)
             {
                 return;
@@ -118,7 +118,7 @@ namespace NRKernal
          */
         public void Resume()
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
             if (!m_IsInitialize)
             {
                 return;
@@ -127,7 +127,7 @@ namespace NRKernal
 #endif
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
         void Update()
         {
             if (m_IsInitialize)
@@ -211,7 +211,7 @@ namespace NRKernal
             GL.IssuePluginEvent(RenderThreadHandlePtr, SETRENDERTEXTUREEVENT);
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
         void OnDestroy()
         {
             if (m_NativeRenderring != null)

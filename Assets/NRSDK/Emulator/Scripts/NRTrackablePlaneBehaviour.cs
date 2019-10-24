@@ -14,10 +14,12 @@ namespace NRKernal
     {
         private void Start()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
             DatabaseIndex = NREmulatorManager.SIMPlaneID;
             NREmulatorManager.SIMPlaneID++;
-#else
+#endif
+
+#if !UNITY_EDITOR
             MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
             if (meshRenderer != null) Destroy(meshRenderer);
             MeshFilter mesh = GetComponent<MeshFilter>();
@@ -25,7 +27,7 @@ namespace NRKernal
 #endif
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
         private void Update()
         {
             float extent = transform.lossyScale.x * 1000;

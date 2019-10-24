@@ -44,7 +44,7 @@ namespace NRKernal
             Down,
         };
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
         void Start()
         {
             DontDestroyOnLoad(this);
@@ -54,7 +54,7 @@ namespace NRKernal
         }
 #endif
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
         void LateUpdate()
         {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -243,9 +243,6 @@ namespace NRKernal
                 NREmulatorManager.Instance.NativeEmulatorApi.SetControllerButtonState(0);
                 NREmulatorManager.Instance.NativeEmulatorApi.SetControllerIsTouching(false);
             }
-
-
-
         }
 
     }

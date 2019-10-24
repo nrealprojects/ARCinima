@@ -9,6 +9,7 @@
 
 namespace NRKernal
 {
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
 
@@ -54,10 +55,24 @@ namespace NRKernal
             {
                 if (SessionStatus == SessionState.Tracking)
                 {
-                    m_HeadPose = NRSessionManager.Instance.NativeAPI.NativeHeadTracking.GetHeadPose();
+                    Pose pose = Pose.identity;
+                    var result = GetHeadPoseByTime(ref pose);
+                    if (result)
+                    {
+                        m_HeadPose = pose;
+                    }
                 }
                 return m_HeadPose;
             }
+        }
+
+        public static bool GetHeadPoseByTime(ref Pose pose, UInt64 timestamp = 0, UInt64 predict = 0)
+        {
+            if (SessionStatus == SessionState.Tracking)
+            {
+                return NRSessionManager.Instance.NativeAPI.NativeHeadTracking.GetHeadPose(ref pose, timestamp, predict);
+            }
+            return false;
         }
 
         /**
@@ -108,10 +123,7 @@ namespace NRKernal
         {
             result = false;
             EyeProjectMatrixData m_EyeProjectMatrix = new EyeProjectMatrixData();
-            if (SessionStatus == SessionState.Tracking)
-            {
-                result = NRDevice.Instance.NativeHMD.GetProjectionMatrix(ref m_EyeProjectMatrix, znear, zfar);
-            }
+            result = NRDevice.Instance.NativeHMD.GetProjectionMatrix(ref m_EyeProjectMatrix, znear, zfar);
             return m_EyeProjectMatrix;
         }
 
@@ -132,6 +144,6 @@ namespace NRKernal
             NRSessionManager.Instance.NativeAPI.TrackableFactory.GetTrackables<T>(trackables, filter);
         }
 
-        
+
     }
 }

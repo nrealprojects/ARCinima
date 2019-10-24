@@ -113,8 +113,11 @@ namespace NRKernal
         public void GetTrackables<T>(List<T> trackables, NRTrackableQueryFilter filter) where T : NRTrackable
         {
             TrackableType t_type = GetTrackableType<T>();
+
+#if !UNITY_EDITOR_OSX
             // Update trackable by type
             UpdateTrackables(t_type);
+#endif
 
             // Find the new trackable in this frame
             m_NewTrackables.Clear();

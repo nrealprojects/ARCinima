@@ -59,19 +59,19 @@ namespace NRKernal
         private int m_RightCullingMask;
         private bool isInited = false;
 
-        void Start()
+        void Awake()
         {
-#if !UNITY_EDITOR
             m_LeftCullingMask = leftCamera.cullingMask;
             m_RightCullingMask = rightCamera.cullingMask;
 
-            leftCamera.cullingMask = 0;
-            rightCamera.cullingMask = 0;
-#else
+#if UNITY_EDITOR
             leftCamera.cullingMask = 0;
             rightCamera.cullingMask = 0;
             centerCamera.cullingMask = -1;
             centerCamera.depth = 1;
+#else
+            leftCamera.cullingMask = 0;
+            rightCamera.cullingMask = 0;
 #endif
         }
 
@@ -92,8 +92,6 @@ namespace NRKernal
                 rightCamera.transform.localRotation = eyeposFromHead.REyePose.rotation;
                 centerCamera.transform.localPosition = (leftCamera.transform.localPosition + rightCamera.transform.localPosition) * 0.5f;
                 centerCamera.transform.localRotation = Quaternion.Lerp(leftCamera.transform.localRotation, rightCamera.transform.localRotation, 0.5f);
-                leftCamera.cullingMask = m_LeftCullingMask;
-                rightCamera.cullingMask = m_RightCullingMask;
 
                 isInited = true;
             }
@@ -109,7 +107,7 @@ namespace NRKernal
                 this.Init();
             }
 
-            UpdatePoseByTrackingType(NRFrame.HeadPose);
+            UpdatePoseByTrackingType();
         }
 
         /**
@@ -129,8 +127,21 @@ namespace NRKernal
             pose.rotation = poseTracker.UseRelative ? gameObject.transform.localRotation : gameObject.transform.rotation;
         }
 
-        void UpdatePoseByTrackingType(Pose pose)
+        private void UpdatePoseByTrackingType()
         {
+            Pose pose = Pose.identity;
+            var result = NRFrame.GetHeadPoseByTime(ref pose);
+            //Debug.LogErrorFormat("get pose result: {0} Lost tracking reason:{1} pose :{2}", result, NRFrame.LostTrackingReason, pose.ToString());
+            if (result && NRFrame.LostTrackingReason == LostTrackingReason.NONE)
+            {
+                SetCameraByTrackingStatus(true);
+            }
+            //else
+            //{
+            //    SetCameraByTrackingStatus(false);
+            //}
+
+            // update pos
             switch (m_TrackingType)
             {
                 case TrackingType.Tracking6Dof:
@@ -157,6 +168,20 @@ namespace NRKernal
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void SetCameraByTrackingStatus(bool isopen)
+        {
+            if (isopen)
+            {
+                leftCamera.cullingMask = m_LeftCullingMask;
+                rightCamera.cullingMask = m_RightCullingMask;
+            }
+            else
+            {
+                leftCamera.cullingMask = 0;
+                rightCamera.cullingMask = 0;
             }
         }
     }

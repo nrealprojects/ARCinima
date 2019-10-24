@@ -110,10 +110,6 @@ namespace NREAL.AR.VideoPlayer
         public MeshRenderer panoLeftScreenRenderer;
         [SerializeField]
         public MeshRenderer panoRightScreenRenderer;
-        [SerializeField]
-        public MeshRenderer movieLeftScreenCurveRenderer;
-        [SerializeField]
-        public MeshRenderer movieRightScreenCurveRenderer;
 
         private Material movieLeftScreenMaterial = null;
         private Material movieRightScreenMaterial = null;
@@ -177,15 +173,15 @@ namespace NREAL.AR.VideoPlayer
             Shader shader = Shader.Find("Unlit/Texture"); ;
             if (Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXEditor)
             {
-                shader = Shader.Find("VideoPlayer/ScreenMac");
+                shader = Resources.Load<Shader>("ScreenShader(mac)");
             }
             else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
             {
-                shader = Shader.Find("VideoPlayer/ScreenWin");
+                shader = Resources.Load<Shader>("ScreenShader(win)");
             }
             else if (Application.platform == RuntimePlatform.Android)
             {
-                shader = Shader.Find("VideoPlayer/ScreenAndroid");
+                shader = Resources.Load<Shader>("ScreenShader(android)");
             }
 
             movieLeftScreenRenderer.material.shader = shader;
@@ -363,20 +359,12 @@ namespace NREAL.AR.VideoPlayer
         {
             if (!isplane)
             {
-                movieLeftScreenCurveRenderer.material = movieLeftScreenMaterial;
-                movieLeftScreenCurveRenderer.gameObject.SetActive(true);
                 movieLeftScreenRenderer.gameObject.SetActive(false);
-
-                movieRightScreenCurveRenderer.material = movieRightScreenMaterial;
-                movieRightScreenCurveRenderer.gameObject.SetActive(true);
                 movieRightScreenRenderer.gameObject.SetActive(false);
             }
             else
             {
-                movieLeftScreenCurveRenderer.gameObject.SetActive(false);
                 movieLeftScreenRenderer.gameObject.SetActive(true);
-
-                movieRightScreenCurveRenderer.gameObject.SetActive(false);
                 movieRightScreenRenderer.gameObject.SetActive(true);
             }
         }

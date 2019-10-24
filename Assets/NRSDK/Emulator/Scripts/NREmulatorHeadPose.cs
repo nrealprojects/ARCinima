@@ -17,7 +17,7 @@ namespace NRKernal
         public float HeadMoveSpeed = 1.0f; //regular speed
         public float HeadRotateSpeed = 1.0f; //How sensitive it with mouse
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
         private void Start()
         {
             DontDestroyOnLoad(this);
@@ -31,7 +31,7 @@ namespace NRKernal
         }
 #endif
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
         private void Update()
         {
             if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))

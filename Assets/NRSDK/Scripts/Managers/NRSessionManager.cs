@@ -98,7 +98,9 @@ namespace NRKernal
                 return;
             }
             NativeAPI = new NativeInterface();
+#if !UNITY_EDITOR_OSX
             SessionStatus = NativeAPI.NativeTracking.Create() ? SessionState.Created : SessionState.UnInitialize;
+#endif
             SessionBehaviour = session;
 
             NRHMDPoseTracker = session.GetComponent<NRHMDPoseTracker>();
@@ -136,12 +138,16 @@ namespace NRKernal
             {
                 return;
             }
+#if !UNITY_EDITOR_OSX
             NativeAPI.Configration.UpdateConfig(config);
+#endif
         }
 
         private void SetTrackingMode(TrackingMode mode)
         {
+#if !UNITY_EDITOR_OSX
             NativeAPI.NativeTracking.SetTrackingMode(mode);
+#endif
         }
 
         public void Recenter()
@@ -150,7 +156,9 @@ namespace NRKernal
             {
                 return;
             }
+#if !UNITY_EDITOR_OSX
             NativeAPI.NativeTracking.Recenter();
+#endif
         }
 
         public static void SetAppSettings(bool useOptimizedRendering)
@@ -183,21 +191,23 @@ namespace NRKernal
                     }
                 }
 #endif
-
             }
             else
             {
                 SetAppSettings(false);
             }
+#if !UNITY_EDITOR_OSX
             NativeAPI.NativeTracking.Start();
+
             bool result = NativeAPI.NativeHeadTracking.Create();
             if (result)
             {
                 SessionStatus = SessionState.Tracking;
             }
+#endif
 
-#if UNITY_EDITOR
-            CreateEmulator();
+#if UNITY_EDITOR_WIN
+            InitEmulator();
 #endif
             m_IsInitialized = true;
         }
@@ -208,9 +218,10 @@ namespace NRKernal
             {
                 return;
             }
-
+#if !UNITY_EDITOR_OSX
             if (NativeAPI.NativeTracking.Pause()) SessionStatus = SessionState.Paused;
             if (m_NRRenderringController != null) m_NRRenderringController.Pause();
+#endif
         }
 
         public void ResumeSession()
@@ -219,9 +230,10 @@ namespace NRKernal
             {
                 return;
             }
-
+#if !UNITY_EDITOR_OSX
             if (NativeAPI.NativeTracking.Resume()) SessionStatus = SessionState.Tracking;
             if (m_NRRenderringController != null) m_NRRenderringController.Resume();
+#endif
         }
 
         public void DestroySession()
@@ -230,14 +242,16 @@ namespace NRKernal
             {
                 return;
             }
+#if !UNITY_EDITOR_OSX
             NativeAPI.NativeHeadTracking.Destroy();
             if (NativeAPI.NativeTracking.Destroy()) SessionStatus = SessionState.Stopped;
             NRDevice.Instance.Destroy();
             SessionBehaviour = null;
+#endif
             m_IsInitialized = false;
         }
 
-        private void CreateEmulator()
+        private void InitEmulator()
         {
             if (!NREmulatorManager.Inited && !GameObject.Find("NREmulatorManager"))
             {
@@ -247,7 +261,6 @@ namespace NRKernal
             if (!GameObject.Find("NREmulatorHeadPos"))
             {
                 GameObject.Instantiate(Resources.Load("Prefabs/NREmulatorHeadPose"));
-
             }
         }
     }

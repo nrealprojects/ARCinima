@@ -30,7 +30,7 @@ namespace NRKernal
         private static Dictionary<string, float> m_TempWidthDict = new Dictionary<string, float>();
 
         private int m_PageIndex = 0;
-        private float defaultWidth = 0.4f;
+        private const float defaultWidth = 0.4f;
 
         public override void OnInspectorGUI()
         {
@@ -211,7 +211,7 @@ namespace NRKernal
 
             if (image.Width < float.Epsilon)
             {
-                image.Width = image.Height = 400;
+                image.Width = image.Height = (int)(defaultWidth * 1000);
             }
 
             string param = string.Format("-image_path={0} -save_dir={1} -width={2}",
@@ -364,7 +364,8 @@ namespace NRKernal
             string key = m_DatabaseForQualityJobs == null ? image.Name : m_DatabaseForQualityJobs.GUID + image.Name;
             if (!m_TempWidthDict.TryGetValue(key, out tempwidth))
             {
-                tempwidth = image.Width * 0.001f;
+
+                tempwidth = defaultWidth;
                 m_TempWidthDict.Add(key, tempwidth);
             }
             tempwidth = EditorGUILayout.FloatField(tempwidth, textFieldStyle, GUILayout.MaxWidth(80f));

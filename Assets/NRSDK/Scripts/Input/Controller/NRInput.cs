@@ -158,7 +158,7 @@ namespace NRKernal
         {
             //Should not be inited at Awake, because that default controller provider may be changed at Awake
             Init();
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
             // For Emulator Init
             InitEmulator();
 #endif

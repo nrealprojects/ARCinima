@@ -23,9 +23,11 @@ namespace NRKernal
 
         public static bool Inited = false;
 
+        private Camera centerCam = null;
+
         private void Start()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
             DontDestroyOnLoad(this);
             Instance = this;
             NativeEmulatorApi = new NativeEmulator();
@@ -36,7 +38,7 @@ namespace NRKernal
 
         private void OnDestroy()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR_WIN
             NativeEmulatorApi.DestorySIMController();
 #endif
         }
@@ -49,12 +51,11 @@ namespace NRKernal
 
         public bool IsInGameView(Vector3 worldPos)
         {
-            Camera cam = GameObject.Find("CenterCamera").GetComponent<Camera>();
-            Transform camTransform = cam.transform;
-            Vector2 viewPos = cam.WorldToViewportPoint(worldPos);
+            if (centerCam == null) centerCam = GameObject.Find("CenterCamera").GetComponent<Camera>();
+            Transform camTransform = centerCam.transform;
+            Vector2 viewPos = centerCam.WorldToViewportPoint(worldPos);
             Vector3 dir = (worldPos - camTransform.position).normalized;
             float dot = Vector3.Dot(camTransform.forward, dir);
-
             if (dot > 0 && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1)
             {
                 return true;
